@@ -1,0 +1,108 @@
+[
+    {
+        "templateId": "4ff98458-2231-11ee-8bc8-3e2644471d60",
+        "action": "remove",
+        "comment": {
+            "body": "Your post has been removed for violating rule 1. Remember, you're on {{subreddit}}!",
+            "lock": true,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": true
+        },
+        "lock": false,
+        "clearPostFlair": false
+    },
+    {
+        "templateId": "54fdb8ca-2231-11ee-9420-56701dbb8ce0",
+        "action": "remove",
+        "comment": {
+            "body": "Your post has been removed for violating rule 2. Remember, you're on {{subreddit}}!",
+            "lock": true,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": true
+        },
+        "lock": false,
+        "clearPostFlair": false
+    },
+    {
+        "templateId": "5829af40-2231-11ee-96ee-d241b27539e9",
+        "action": "remove",
+        "comment": {
+            "body": "Your post has been removed for violating rule 3. Remember, you're on {{subreddit}}!",
+            "lock": true,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": true
+        },
+        "lock": false,
+        "clearPostFlair": false
+    },
+    {
+        "templateId": "188b877c-2232-11ee-8a1b-3eec626e8d8f",
+        "action": "none",
+        "userFlair": {
+            "text": "",
+            "cssClass": "k",
+            "templateId": ""
+        }
+    },
+    {
+        "templateId": "1b81043e-2232-11ee-88da-16de429d611b",
+        "action": "none",
+        "ban": {
+            "duration": 1,
+            "message": "You have been temporarily banned for violating rule 1. Please review the rules before posting again.",
+            "note": "R1"
+        }
+    },
+    {
+        "templateId": "17c30102-2233-11ee-b00b-be3cc5fdb42e",
+        "action": "none",
+        "ban": {
+            "message": "You have been permanently banned.",
+            "note": "R1"
+        }
+    },
+    {
+        "templateId": "29bd080e-2232-11ee-8223-56701dbb8ce0",
+        "action": "remove",
+        "comment": {
+            "body": "Removed for R4 & Locked & Banned!",
+            "lock": true,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": false
+        },
+        "lock": true,
+        "clearPostFlair": true,
+        "ban": {
+            "duration": 7,
+            "message": "You have been temporarily banned for violating rule 4. Please review the rules before posting again.",
+            "note": "R4"
+        }
+    },
+    {
+        "templateId": "8bcb1ae4-2233-11ee-88ef-7eb172bf4902",
+        "action": "none",
+        "comment": {
+            "body": "author: {{author}}\n\nsubreddit: {{subreddit}}\n\nbody: {{body}}\n\ntitle: {{title}}\n\nid: {{id}}\n\npermalink: {{permalink}}\n\nurl: {{url}}\n\ndomain: {{domain}}\n\nlink: {{link}}\n\nkind: {{kind}}\n\nmod: {{mod}}\n\nauthor_flair_text: {{author_flair_text}}\n\nauthor_flair_css_class: {{author_flair_css_class}}\n\nauthor_flair_template_id: {{author_flair_template_id}}\n\nlink_flair_text: {{link_flair_text}}\n\nlink_flair_css_class: {{link_flair_css_class}}\n\nlink_flair_template_id: {{link_flair_template_id}}\n\nauthor_id: {{author_id}}\n\nsubreddit_id: {{subreddit_id}}\n\ntime_unix: {{time_unix}}\n\ntime_iso: {{time_iso}}\n\ntime_custom: {{time_custom}}\n\ncreated_unix: {{created_unix}}\n\ncreated_iso: {{created_iso}}\n\ncreated_custom: {{created_custom}}\n\nactioned_unix: {{actioned_unix}}\n\nactioned_iso: {{actioned_iso}}\n\nactioned_custom: {{actioned_custom}}",
+            "lock": false,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": false
+        }
+    },
+    {
+        "templateId": "1365f30e-2232-11ee-b77e-ca429d4a5660",
+        "action": "approve",
+        "comment": {
+            "body": "author: {{author}}\n\nsubreddit: {{subreddit}}\n\nbody: {{body}}\n\ntitle: {{title}}\n\nid: {{id}}\n\npermalink: {{permalink}}\n\nurl: {{url}}\n\ndomain: {{domain}}\n\nlink: {{link}}\n\nkind: {{kind}}\n\nmod: {{mod}}\n\nauthor_flair_text: {{author_flair_text}}\n\nauthor_flair_css_class: {{author_flair_css_class}}\n\nauthor_flair_template_id: {{author_flair_template_id}}\n\nlink_flair_text: {{link_flair_text}}\n\nlink_flair_css_class: {{link_flair_css_class}}\n\nlink_flair_template_id: {{link_flair_template_id}}\n\nauthor_id: {{author_id}}\n\nsubreddit_id: {{subreddit_id}}\n\ntime_unix: {{time_unix}}\n\ntime_iso: {{time_iso}}\n\ntime_custom: {{time_custom}}\n\ncreated_unix: {{created_unix}}\n\ncreated_iso: {{created_iso}}\n\ncreated_custom: {{created_custom}}\n\nactioned_unix: {{actioned_unix}}\n\nactioned_iso: {{actioned_iso}}\n\nactioned_custom: {{actioned_custom}}",
+            "lock": true,
+            "sticky": true,
+            "distinguish": true,
+            "headerFooter": true
+        },
+        "lock": true
+    }
+]
