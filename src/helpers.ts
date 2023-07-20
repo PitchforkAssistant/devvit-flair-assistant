@@ -85,7 +85,7 @@ export function replacePlaceholders (text: string, modAction: ModAction, timefor
     }
     if (actionedAt) {
         replacements["{{actioned_iso}}"] = actionedAt.toISOString();
-        replacements["{{actioned_unix}}"] = actionedAt.toISOString();
+        replacements["{{actioned_unix}}"] = (actionedAt.getTime() / 1000).toString();
     }
     if (timeformat) {
         replacements["{{time_custom}}"] = safeTimeformat(time, timeformat);
