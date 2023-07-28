@@ -21,23 +21,8 @@ This app has configurable settings for each of its subreddits. If you have insta
 The first two fields in the app settings are the header and footer templates. These function similarly to Toolbox's header and footer text. Flairs configured to leave a comment with `headerFooter` set to `true` will prepend a header and append a footer to the comment body using two new lines as a separator. These fields support the same [placeholders](#placeholders) as Toolbox and Flair_Helper.
 
 
-## Custom Timeformat
 
-This timeformat is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. The application uses date-fns to format custom dates, the patterns for these are different from the Python timeformat Flair_Helper used. It uses the date formatting specified in the Unicode Technical Standard #35 with a few extra options, [view a full list of patterns supported by date-fns](https://date-fns.org/v2.30.0/docs/format). The default value is `yyyy-MM-dd HH-mm-ss`, below is a list of some common patterns:
-
-
-| Name   | Pattern(s)          | Example(s)           |
-| :----- | :------------------ | :------------------- |
-| Year   | yy, yyyy            | 23, 2023             |
-| Month  | M, MM, MMM, MMMM    | 7, 07, Jul, July     |
-| Day    | d, dd, E, EEEE      | 1, 01, Sat, Saturday |
-| Hour   | h, hh, H, HH        | 1, 01, 13, 13        |
-| Minute | m, mm               | 3, 03                |
-| Second | s, ss               | 2, 02                |
-| Text   | yyyy'y' MMMM 'text' | 2023y July text      |
-
-
-## Skip Actions Timer
+## Action Debounce
 
 The app skips certain actions if the moderator that set the post's flair already performed them. This field defines the maximum age in seconds that a moderator action can be for it to be skipped. This is necessary to prevent Toolbox removals that also set a flair from duplicating the actions linked to that flair. A cutoff of 10 seconds worked well in my testing and is the default. The actions that are checked and may be skipped are listed below.
 
@@ -439,3 +424,124 @@ The example above has configurations for four different flairs, this is what the
 4. The post is approved. The user is given a flair with a blank templateId and cssClass and the text "Good Contributor". The user is added to the approved submitters list.
 
 Please note that flair template IDs are different for each flair on every subreddit.
+
+## Custom Date Placeholder Options
+
+### Date Format Template
+
+This date template is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. The application uses date-fns to format custom dates, the patterns for these are different from the Python timeformat Flair_Helper used. It uses the date formatting specified in the Unicode Technical Standard #35 with a few extra options, [view a full list of patterns supported by date-fns](https://date-fns.org/v2.30.0/docs/format). The default value is `yyyy-MM-dd HH-mm-ss`, below is a list of some common patterns:
+
+
+| Name   | Pattern(s)          | Example(s)           |
+| :----- | :------------------ | :------------------- |
+| Year   | yy, yyyy            | 23, 2023             |
+| Month  | M, MM, MMM, MMMM    | 7, 07, Jul, July     |
+| Day    | d, dd, E, EEEE      | 1, 01, Sat, Saturday |
+| Hour   | h, hh, H, HH        | 1, 01, 13, 13        |
+| Minute | m, mm               | 3, 03                |
+| Second | s, ss               | 2, 02                |
+| Text   | yyyy'y' MMMM 'text' | 2023y July text      |
+
+### Timezone
+
+This is the timezone used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. The default value is `UTC`. This field can accept both timezone identifiers and offsets. [View a full list of supported timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) or simply provide it in the format `+HH:mm` or `-HH:mm` (ie. `+05:30` or `-08:00`).
+
+### Locale
+
+This field is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. It affects locale specific values such as the first day of the week, month names, abbrivations, etc. The default value is `en-US`. Below is a table of all supported locales:
+
+| Name                      | Value      |
+| :------------------------ | :--------- |
+| Afrikaans                 | `af`       |
+| Arabic                    | `ar`       |
+| Arabic - Algeria          | `arDZ`     |
+| Arabic - Egypt            | `arEG`     |
+| Arabic - Morocco          | `arMA`     |
+| Arabic - Saudi Arabia     | `arSA`     |
+| Arabic - Tunisia          | `arTN`     |
+| Azeri                     | `az`       |
+| Belarusian                | `be`       |
+| Belarusian - Taraškievica | `beTarask` |
+| Bulgarian                 | `bg`       |
+| Bengali                   | `bn`       |
+| Bosnian                   | `bs`       |
+| Catalan                   | `ca`       |
+| Czech                     | `cs`       |
+| Welsh                     | `cy`       |
+| Danish                    | `da`       |
+| German                    | `de`       |
+| German - Austria          | `deAT`     |
+| Greek                     | `el`       |
+| English - Australia       | `enAU`     |
+| English - Canada          | `enCA`     |
+| English - Great Britain   | `enGB`     |
+| English - Ireland         | `enIE`     |
+| English - India           | `enIN`     |
+| English - New Zealand     | `enNZ`     |
+| English - United States   | `enUS`     |
+| English - Zimbabwe        | `enZA`     |
+| Esperanto                 | `eo`       |
+| Spanish                   | `es`       |
+| Estonian                  | `et`       |
+| Basque                    | `eu`       |
+| Farsi - Iran              | `faIR`     |
+| Finnish                   | `fi`       |
+| French                    | `fr`       |
+| French - Canada           | `frCA`     |
+| French - Switzerland      | `frCH`     |
+| Frisian                   | `fy`       |
+| Gaelic                    | `gd`       |
+| Galician                  | `gl`       |
+| Gujarati                  | `gu`       |
+| Hebrew                    | `he`       |
+| Hindi                     | `hi`       |
+| Croatian                  | `hr`       |
+| Haitian Creole            | `ht`       |
+| Hungarian                 | `hu`       |
+| Armenian                  | `hy`       |
+| Indonesian                | `id`       |
+| Icelandic                 | `is`       |
+| Italian                   | `it`       |
+| Italian - Switzerland     | `itCH`     |
+| Japanese                  | `ja`       |
+| Japanese - Hiragana       | `jaHira`   |
+| Georgian                  | `ka`       |
+| Kazakh                    | `kk`       |
+| Khmer                     | `km`       |
+| Kannada                   | `kn`       |
+| Korean                    | `ko`       |
+| Luxembourgish             | `lb`       |
+| Lithuanian                | `lt`       |
+| Latvian                   | `lv`       |
+| Macedonian                | `mk`       |
+| Mongolian                 | `mn`       |
+| Malay                     | `ms`       |
+| Maltese                   | `mt`       |
+| Norwegian - Bokml         | `nb`       |
+| Dutch                     | `nl`       |
+| Dutch - Belgium           | `nlBE`     |
+| Norwegian - Nynorsk       | `nn`       |
+| Occitan                   | `oc`       |
+| Polish                    | `pl`       |
+| Portuguese                | `pt`       |
+| Portuguese - Brazil       | `ptBR`     |
+| Romanian                  | `ro`       |
+| Russian                   | `ru`       |
+| Slovak                    | `sk`       |
+| Slovenian                 | `sl`       |
+| Albanian                  | `sq`       |
+| Serbian - Cyrillic        | `sr`       |
+| Serbian - Latin           | `srLatn`   |
+| Swedish                   | `sv`       |
+| Tamil                     | `ta`       |
+| Telugu                    | `te`       |
+| Thai                      | `th`       |
+| Turkish                   | `tr`       |
+| Uyghur                    | `ug`       |
+| Ukrainian                 | `uk`       |
+| Uzbek - Latin             | `uz`       |
+| Uzbek - Cyrillic          | `uzCyrl`   |
+| Vietnamese                | `vi`       |
+| Chinese                   | `zhCN`     |
+| Chinese - Hong Kong       | `zhHK`     |
+| Chinese - Taiwan          | `zhTW`     |
