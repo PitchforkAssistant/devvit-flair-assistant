@@ -20,7 +20,7 @@ export interface FlairBan {
 
 export interface FlairEntry {
     templateId: string;
-    action?: "remove" | "spam" | "approve" | "none";
+    action?: "remove" | "spam" | "approve";
     comment?: FlairComment;
     userFlair?: FlairUserFlair;
     contributor?: "add" | "remove";

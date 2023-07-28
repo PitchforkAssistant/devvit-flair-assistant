@@ -1,5 +1,6 @@
 import {Devvit} from "@devvit/public-api";
-import {handleFlairUpdate, validateCustomTimeformat, validateFlairConfig} from "./handlers.js";
+import {handleFlairUpdate, validateActionDebounce, validateCustomTimeformat, validateFlairConfig} from "./handlers.js";
+import {DEFAULT_ACTION_DEBOUNCE, DEFAULT_CUSTOM_TIMEFORMAT, DEFAULT_FLAIR_CONFIG, DEFAULT_FOOTER_TEMPLATE, DEFAULT_HEADER_TEMPLATE} from "./constants.js";
 
 Devvit.configure({
     redditAPI: true,
@@ -9,26 +10,33 @@ Devvit.addSettings([
     {
         type: "paragraph",
         name: "headerTemplate",
-        defaultValue: "Hi {{author}}! Thanks for posting to /r/{{subreddit}}. Unfortunately, [your {{kind}}]({{permalink}}) was removed for the following reason:",
+        defaultValue: DEFAULT_HEADER_TEMPLATE,
         label: "Enter your header template:",
     },
     {
         type: "paragraph",
         name: "footerTemplate",
-        defaultValue: "If you have questions about this, please [contact our mods via moderator mail](https://www.reddit.com/message/compose?to={{subreddit}}) rather than replying here. Thank you!",
+        defaultValue: DEFAULT_FOOTER_TEMPLATE,
         label: "Enter your footer template:",
     },
     {
         type: "string",
         name: "customTimeformat",
-        defaultValue: "yyyy-mm-dd hh-mm-ss",
+        defaultValue: DEFAULT_CUSTOM_TIMEFORMAT,
         label: "Enter your custom timeformat:",
         onValidate: validateCustomTimeformat,
     },
     {
+        type: "number",
+        name: "actionDebounce",
+        defaultValue: DEFAULT_ACTION_DEBOUNCE,
+        label: "Skip certain actions if they were already performed in the last X seconds:",
+        onValidate: validateActionDebounce,
+    },
+    {
         type: "paragraph",
         name: "flairConfig",
-        defaultValue: "[]",
+        defaultValue: DEFAULT_FLAIR_CONFIG,
         label: "Enter your flair config as raw JSON:",
         onValidate: validateFlairConfig,
     },

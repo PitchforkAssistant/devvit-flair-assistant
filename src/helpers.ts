@@ -1,5 +1,5 @@
 import {ModAction} from "@devvit/protos";
-import {SettingsClient} from "@devvit/public-api";
+import {ModActionType, RedditAPIClient} from "@devvit/public-api";
 import {format} from "date-fns";
 import {enUS} from "date-fns/locale";
 
@@ -20,22 +20,40 @@ export function safeTimeformat (datetime: Date, timeformat: string, locale = enU
     }
 }
 
-export async function populateTemplate (text: string, headerFooter: boolean, settings: SettingsClient, modAction: ModAction): Promise<string> {
-    let header = "";
-    let footer = "";
-    let timeformat = "";
-
-    const promises: Promise<string>[] = [];
-    if (text.includes("_custom}}")) {
-        promises.push(settings.get<string>("customTimeformat").then(value => timeformat = value ?? ""));
+export function toNumberOrDefault (input: unknown, defaultValue: number): number {
+    try {
+        const value = Number(input);
+        return isNaN(value) ? defaultValue : value;
+    } catch (error) {
+        return defaultValue;
     }
-    if (headerFooter) {
-        promises.push(settings.get<string>("headerTemplate").then(value => header = value ?? ""));
-        promises.push(settings.get<string>("footerTemplate").then(value => footer = value ?? ""));
-    }
-    await Promise.all(promises);
+}
 
-    return replacePlaceholders(text, modAction, timeformat, header, footer);
+export function getTimeDeltaInSeconds (a: Date, b: Date): number {
+    if (!a || !b) {
+        return Infinity;
+    }
+    return Math.abs(a.getTime() - b.getTime()) / 1000;
+}
+
+export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds: number, includeParent: boolean, moderatorId?: string,): Promise<boolean> {
+    const modLog = await reddit.getModerationLog({subredditName, moderatorId, type: actionType, limit: 100, pageSize: 100}).all();
+    for (const modAction of modLog) {
+        if (getTimeDeltaInSeconds(new Date(), modAction.createdAt) < cutoffSeconds) {
+            if (modAction.target?.id === actionTargetId) {
+                return true;
+            } else if (includeParent && modAction.target?.permalink?.startsWith(`/r/${subredditName}/comments/${actionTargetId.substring(3)}/`)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+export async function hasPerformedActions (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionTypes: ModActionType[], cutoffSeconds: number, includeParent: boolean, moderatorId?: string,): Promise<boolean> {
+    const actionChecks = actionTypes.map(actionType => hasPerformedAction(reddit, subredditName, actionTargetId, actionType, cutoffSeconds, includeParent, moderatorId));
+    const results = await Promise.all(actionChecks);
+    return results.includes(true);
 }
 
 export function hasPlaceholders (text: string): boolean {

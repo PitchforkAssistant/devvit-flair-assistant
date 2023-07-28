@@ -12,7 +12,6 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                     "approve",
                     "remove",
                     "spam",
-                    "none",
                 ],
                 type: "string",
                 nullable: true,
