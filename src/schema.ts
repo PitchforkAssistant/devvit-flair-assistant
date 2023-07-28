@@ -53,23 +53,23 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                     },
                     distinguish: {
                         type: "boolean",
+                        nullable: true,
                     },
                     headerFooter: {
                         type: "boolean",
+                        nullable: true,
                     },
                     lock: {
                         type: "boolean",
+                        nullable: true,
                     },
                     sticky: {
                         type: "boolean",
+                        nullable: true,
                     },
                 },
                 required: [
                     "body",
-                    "distinguish",
-                    "headerFooter",
-                    "lock",
-                    "sticky",
                 ],
                 type: "object",
                 nullable: true,

@@ -1,9 +1,9 @@
 export interface FlairComment {
     body: string;
-    sticky: boolean;
-    lock: boolean;
-    distinguish: boolean;
-    headerFooter: boolean;
+    sticky?: boolean;
+    lock?: boolean;
+    distinguish?: boolean;
+    headerFooter?: boolean;
 }
 
 export interface FlairUserFlair {

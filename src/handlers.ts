@@ -159,7 +159,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
             };
             const comment = await context.reddit.submitComment(commentOptions);
             console.log(`Commented on post ${postId} with comment ${comment.id}`);
-            if (flairConfig.comment.distinguish) {
+            if (flairConfig.comment.distinguish || flairConfig.comment.sticky) {
                 console.log(`Distinguishing comment ${comment.id}`);
                 comment.distinguish(flairConfig.comment.sticky).catch(e => logError(`Failed to distinguish comment ${comment.id}`, e));
             }

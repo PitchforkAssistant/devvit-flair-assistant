@@ -8,7 +8,7 @@ export const DEFAULT_ACTION_DEBOUNCE = 10;
 
 export const DEFAULT_FLAIR_CONFIG = "[]";
 
-export const SCHEMA_VALIDATOR_URL = "https://www.jsonschemavalidator.net/s/lcnf4wjU";
+export const SCHEMA_VALIDATOR_URL = "https://www.jsonschemavalidator.net/s/bq0mGGhP";
 
 export const ERROR_INVALID_JSON = "Failed to parse JSON, the syntax is likely invalid.";
 
