@@ -37,7 +37,10 @@ export function getTimeDeltaInSeconds (a: Date, b: Date): number {
 }
 
 export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds: number, includeParent: boolean, moderatorId?: string,): Promise<boolean> {
-    const modLog = await reddit.getModerationLog({subredditName, moderatorId, type: actionType, limit: 100, pageSize: 100}).all();
+    const modLog = await reddit.getModerationLog({subredditName, moderatorId, type: actionType, limit: 100, pageSize: 100}).all().catch(e => {
+        logError(`Failed to fetch ${actionType} log for ${subredditName} by ${moderatorId ?? ""}`, e);
+        return [];
+    });
     for (const modAction of modLog) {
         if (getTimeDeltaInSeconds(new Date(), modAction.createdAt) < cutoffSeconds) {
             if (modAction.target?.id === actionTargetId) {
@@ -58,6 +61,11 @@ export async function hasPerformedActions (reddit: RedditAPIClient, subredditNam
 
 export function hasPlaceholders (text: string): boolean {
     return !!text && text.includes("{{") && text.includes("}}");
+}
+
+export function logError (note: string, error: unknown): void {
+    console.error(note);
+    console.error(error);
 }
 
 export function replacePlaceholders (text: string, modAction: ModAction, timeformat: string, header = "", footer = ""): string {

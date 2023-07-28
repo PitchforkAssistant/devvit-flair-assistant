@@ -3,7 +3,7 @@ import {BanUserOptions, Context, OnTriggerEvent, SetUserFlairOptions, SettingsFo
 import AjvModule from "ajv";
 import {FlairEntries} from "./types.js";
 import {flairEntriesSchema} from "./schema.js";
-import {hasPerformedAction, hasPerformedActions, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
+import {hasPerformedAction, hasPerformedActions, logError, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
 import {DEFAULT_ACTION_DEBOUNCE, ERROR_INVALID_ACTION_DEBOUNCE, ERROR_INVALID_JSON, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEFORMAT} from "./constants.js";
 
 const ajv = new AjvModule.default();
@@ -75,7 +75,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Clear Post Flair
     if (flairConfig.clearPostFlair) {
         console.log(`Clearing post flair for post ${postId}`);
-        context.reddit.removePostFlair(subredditName, postId).catch(e => console.error(e));
+        context.reddit.removePostFlair(subredditName, postId).catch(e => logError(`Failed to clear post flair for post ${postId}`, e));
     }
 
     // Handle Actions
@@ -84,13 +84,13 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
         if (!await hasPerformedAction(context.reddit, subredditName, postId, `${flairConfig.action}link`, actionDebounce, false, event.moderator?.id)) {
             if (flairConfig.action === "remove") {
                 console.log(`Removing post ${postId}`);
-                context.reddit.remove(postId, false).catch(e => console.error(e));
+                context.reddit.remove(postId, false).catch(e => logError(`Failed to remove post ${postId}`, e));
             } else if (flairConfig.action === "spam") {
                 console.log(`Spamming post ${postId}`);
-                context.reddit.remove(postId, true).catch(e => console.error(e));
+                context.reddit.remove(postId, true).catch(e => logError(`Failed to spam post ${postId}`, e));
             } else if (flairConfig.action === "approve") {
                 console.log(`Approving post ${postId}`);
-                context.reddit.approve(postId).catch(e => console.error(e));
+                context.reddit.approve(postId).catch(e => logError(`Failed to approve post ${postId}`, e));
             }
         } else {
             console.log(`Skipped action on post ${postId} because it got a remove/approve/spam action in the past ${actionDebounce} seconds.`);
@@ -107,16 +107,16 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
             cssClass: flairConfig.userFlair.cssClass,
         };
         console.log(`Setting user flair for user ${author}`);
-        context.reddit.setUserFlair(userFlairOptions).catch(e => console.error(e));
+        context.reddit.setUserFlair(userFlairOptions).catch(e => logError(`Failed to set user flair for user ${author}`, e));
     }
 
     // Handle Approved User
     if (flairConfig.contributor === "add") {
         console.log(`Adding user ${author} as approved user`);
-        context.reddit.approveUser(author, subredditName).catch(e => console.error(e));
+        context.reddit.approveUser(author, subredditName).catch(e => logError(`Failed to add user ${author} as contributor`, e));
     } else if (flairConfig.contributor === "remove") {
         console.log(`Removing user ${author} as approved user`);
-        context.reddit.removeUser(author, subredditName).catch(e => console.error(e));
+        context.reddit.removeUser(author, subredditName).catch(e => logError(`Failed to remove user ${author} as contributor`, e));
     }
 
     // Handle Ban
@@ -136,7 +136,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
                 note,
             };
             console.log(`Banning user ${author}`);
-            context.reddit.banUser(banOptions).catch(e => console.error(e));
+            context.reddit.banUser(banOptions).catch(e => logError(`Failed to ban user ${author}`, e));
         } else {
             console.log(`Skipped ban on user ${author} because they got a ban action in the past ${actionDebounce} seconds.`);
         }
@@ -161,11 +161,11 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
             console.log(`Commented on post ${postId} with comment ${comment.id}`);
             if (flairConfig.comment.distinguish) {
                 console.log(`Distinguishing comment ${comment.id}`);
-                comment.distinguish(flairConfig.comment.sticky).catch(e => console.error(e));
+                comment.distinguish(flairConfig.comment.sticky).catch(e => logError(`Failed to distinguish comment ${comment.id}`, e));
             }
             if (flairConfig.comment.lock) {
                 console.log(`Locking comment ${comment.id}`);
-                comment.lock().catch(e => console.error(e));
+                comment.lock().catch(e => logError(`Failed to lock comment ${comment.id}`, e));
             }
         } else {
             console.log(`Skipped comment on post ${postId} because it got a sticky/distinguish action in the past ${actionDebounce} seconds.`);
@@ -175,6 +175,6 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Lock
     if (flairConfig.lock) {
         console.log(`Locking post ${postId}`);
-        context.reddit.getPostById(postId).then(post => post.lock()).catch(e => console.error(e));
+        context.reddit.getPostById(postId).then(post => post.lock()).catch(e => logError(`Failed to lock ${postId}`, e));
     }
 }
