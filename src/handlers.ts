@@ -124,15 +124,14 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
         // Avoids duplicating bans if the user was already banned.
         if (!await hasPerformedAction(context.reddit, subredditName, authorId, "banuser", actionDebounce, false, event.moderator?.id)) {
             const message = replacePlaceholders(flairConfig.ban.message, event, customTimeformat);
-            const reason = replacePlaceholders(flairConfig.ban.reason, event, customTimeformat);
             const note = replacePlaceholders(flairConfig.ban.note, event, customTimeformat);
             const banOptions: BanUserOptions = {
-                subredditName,
                 username: author,
-                context: event.targetPost?.id,
                 duration: flairConfig.ban.duration,
+                context: event.targetPost?.id,
+                reason: flairConfig.ban.reason,
+                subredditName,
                 message,
-                reason,
                 note,
             };
             console.log(`Banning user ${author}`);
