@@ -59,6 +59,9 @@ test.each([
 test.each([
     ["enUS", enUS],
     ["ENUS", enUS],
+    ["EN-US", enUS],
+    ["EN_US", enUS],
+    [" -EN_US", enUS],
     ["potato", undefined],
     ["DE", de],
 ])("getLocaleFromString(%s) -> %s", (input, expected) => {
