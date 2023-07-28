@@ -83,7 +83,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Actions
     if (flairConfig.action) {
         // Avoids duplicating actions if the post was already approved/removed/spammed.
-        if (!await hasPerformedActions(context.reddit, subredditName, postId, ["removelink", "approvelink", "spamlink"], actionDebounce, false, event.moderator?.id)) {
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, `${flairConfig.action}link`, actionDebounce, false, event.moderator?.id)) {
             if (flairConfig.action === "remove") {
                 console.log(`Removing post ${postId}`);
                 context.reddit.remove(postId, false).catch(e => console.error(e));
