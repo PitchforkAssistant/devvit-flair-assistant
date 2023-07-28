@@ -29,10 +29,14 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                     note: {
                         type: "string",
                     },
+                    reason: {
+                        type: "string",
+                    },
                 },
                 required: [
                     "message",
                     "note",
+                    "reason",
                 ],
                 type: "object",
                 nullable: true,

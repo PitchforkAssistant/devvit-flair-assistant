@@ -4,7 +4,7 @@ import AjvModule from "ajv";
 import {FlairEntries} from "./types.js";
 import {flairEntriesSchema} from "./schema.js";
 import {hasPerformedAction, hasPerformedActions, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
-import {DEFAULT_ACTION_DEBOUNCE} from "./constants.js";
+import {DEFAULT_ACTION_DEBOUNCE, ERROR_INVALID_ACTION_DEBOUNCE, ERROR_INVALID_JSON, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEFORMAT} from "./constants.js";
 
 const ajv = new AjvModule.default();
 const validate = ajv.compile(flairEntriesSchema);
@@ -14,26 +14,24 @@ export async function validateFlairConfig (event: SettingsFormFieldValidatorEven
     try {
         const valid = validate(JSON.parse(config?.toString() ?? "") as FlairEntries);
         if (!valid) {
-            return "Failed to validate against config schema, try it at: https://www.jsonschemavalidator.net/s/MHlvOFJo";
+            return ERROR_INVALID_SCHEMA;
         }
     } catch (e) {
-        return "Failed to parse JSON, the syntax is likely invalid.";
+        return ERROR_INVALID_JSON;
     }
 }
 
 export async function validateActionDebounce (event: SettingsFormFieldValidatorEvent<number>) {
     const actionDebounce = Number(event?.value);
-    if (isNaN(actionDebounce)) {
-        return "Action debounce must be a number.";
-    } else if (actionDebounce < 0) {
-        return "Action debounce must be a positive number.";
+    if (isNaN(actionDebounce) || actionDebounce < 0) {
+        return ERROR_INVALID_ACTION_DEBOUNCE;
     }
 }
 
 export async function validateCustomTimeformat (event: SettingsFormFieldValidatorEvent<string>) {
     const config = event?.value?.toString();
     if (!safeTimeformat(new Date(), config?.toString() ?? "")) {
-        return "Invalid timeformat, see: https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table";
+        return ERROR_INVALID_TIMEFORMAT;
     }
 }
 
@@ -126,14 +124,15 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
         // Avoids duplicating bans if the user was already banned.
         if (!await hasPerformedAction(context.reddit, subredditName, authorId, "banuser", actionDebounce, false, event.moderator?.id)) {
             const message = replacePlaceholders(flairConfig.ban.message, event, customTimeformat);
+            const reason = replacePlaceholders(flairConfig.ban.reason, event, customTimeformat);
             const note = replacePlaceholders(flairConfig.ban.note, event, customTimeformat);
             const banOptions: BanUserOptions = {
                 subredditName,
                 username: author,
                 context: event.targetPost?.id,
                 duration: flairConfig.ban.duration,
-                reason: note,
                 message,
+                reason,
                 note,
             };
             console.log(`Banning user ${author}`);

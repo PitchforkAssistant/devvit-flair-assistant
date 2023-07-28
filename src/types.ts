@@ -16,6 +16,7 @@ export interface FlairBan {
     duration?: number;
     message: string;
     note: string;
+    reason: string;
 }
 
 export interface FlairEntry {

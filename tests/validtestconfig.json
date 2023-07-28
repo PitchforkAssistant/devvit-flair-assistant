@@ -51,14 +51,16 @@
         "ban": {
             "duration": 1,
             "message": "You have been temporarily banned for violating rule 1. Please review the rules before posting again.",
-            "note": "R1"
+            "note": "R1",
+            "reason": "R1 temp"
         }
     },
     {
         "templateId": "17c30102-2233-11ee-b00b-be3cc5fdb42e",
         "ban": {
             "message": "You have been permanently banned.",
-            "note": "R1"
+            "note": "R1",
+            "reason": "R1 perm"
         }
     },
     {
@@ -76,7 +78,8 @@
         "ban": {
             "duration": 7,
             "message": "You have been temporarily banned for violating rule 4. Please review the rules before posting again.",
-            "note": "R4"
+            "note": "R4",
+            "reason": "R4 temp"
         }
     },
     {
