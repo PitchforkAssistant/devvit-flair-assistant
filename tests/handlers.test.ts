@@ -1,5 +1,5 @@
 import {ERRORS} from "../src/constants.js";
-import {validateCustomLocale, validateCustomTimeformat, validateCustomTimezone, validateFlairConfig} from "../src/handlers.js";
+import {validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "../src/handlers.js";
 import * as validTestConfig from "./validtestconfig.json";
 
 describe("validateFlairConfig", () => {
@@ -21,7 +21,7 @@ describe("validateFlairConfig", () => {
 });
 
 test("validateCustomTimeformat should return nothing for a valid timeformat", async () => {
-    expect(await validateCustomTimeformat({value: "yyyy-MM-dd HH:mm:ss", isEditing: false})).toBeUndefined();
+    expect(await validateCustomDateTemplate({value: "yyyy-MM-dd HH:mm:ss", isEditing: false})).toBeUndefined();
 });
 
 describe("validateCustomTimezone", () => {

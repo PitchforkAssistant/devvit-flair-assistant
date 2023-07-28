@@ -30,7 +30,7 @@ export async function validateActionDebounce (event: SettingsFormFieldValidatorE
     }
 }
 
-export async function validateCustomTimeformat (event: SettingsFormFieldValidatorEvent<string>) {
+export async function validateCustomDateTemplate (event: SettingsFormFieldValidatorEvent<string>) {
     if (!safeTimeformat(new Date(), event?.value?.toString() ?? "", "UTC", enUS)) {
         return ERRORS.INVALID_TIMEFORMAT;
     }

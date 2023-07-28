@@ -1,5 +1,5 @@
 import {Devvit} from "@devvit/public-api";
-import {handleFlairUpdate, validateActionDebounce, validateCustomLocale, validateCustomTimeformat, validateCustomTimezone, validateFlairConfig} from "./handlers.js";
+import {handleFlairUpdate, validateActionDebounce, validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "./handlers.js";
 import {LABELS, DEFAULTS} from "./constants.js";
 
 Devvit.configure({
@@ -39,10 +39,10 @@ Devvit.addSettings([
         fields: [
             {
                 type: "string",
-                name: "customTimeformat",
+                name: "customDateTemplate",
                 defaultValue: DEFAULTS.CUSTOM_DATE_TEMPLATE,
                 label: LABELS.CUSTOM_DATE_TEMPLATE,
-                onValidate: validateCustomTimeformat,
+                onValidate: validateCustomDateTemplate,
             },
             {
                 type: "string",
