@@ -175,6 +175,13 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Lock
     if (flairConfig.lock) {
         console.log(`Locking post ${postId}`);
-        context.reddit.getPostById(postId).then(post => post.lock()).catch(e => logError(`Failed to lock ${postId}`, e));
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, "lock", actionDebounce, false, event.moderator?.id)) {
+            const post = await context.reddit.getPostById(postId).catch(e => logError(`Failed to get ${postId}`, e));
+            if (post) {
+                post.lock().catch(e => logError(`Failed to lock post ${postId}`, e));
+            }
+        } else {
+            console.log(`Skipped lock on post ${postId} because it got a lock action in the past ${actionDebounce} seconds.`);
+        }
     }
 }
