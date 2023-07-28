@@ -1,4 +1,4 @@
-import {ERROR_INVALID_JSON, ERROR_INVALID_LOCALE, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEZONE} from "../src/constants.js";
+import {ERRORS} from "../src/constants.js";
 import {validateCustomLocale, validateCustomTimeformat, validateCustomTimezone, validateFlairConfig} from "../src/handlers.js";
 import * as validTestConfig from "./validtestconfig.json";
 
@@ -10,13 +10,13 @@ describe("validateFlairConfig", () => {
         expect(await validateFlairConfig({value: "[]", isEditing: false})).toBeUndefined();
     });
     test("validateFlairConfig should return a string for an empty config", async () => {
-        expect(await validateFlairConfig({value: "", isEditing: false})).toEqual(ERROR_INVALID_JSON);
+        expect(await validateFlairConfig({value: "", isEditing: false})).toEqual(ERRORS.INVALID_JSON);
     });
     test("validateFlairConfig should return a string for invalid JSON", async () => {
-        expect(await validateFlairConfig({value: "][23[123;2'1]]2140-112)9(){}213.sd/3", isEditing: false})).toEqual(ERROR_INVALID_JSON);
+        expect(await validateFlairConfig({value: "][23[123;2'1]]2140-112)9(){}213.sd/3", isEditing: false})).toEqual(ERRORS.INVALID_JSON);
     });
     test("validateFlairConfig should return a string for no templateId in config entry", async () => {
-        expect(await validateFlairConfig({value: "[{}]", isEditing: false})).toEqual(ERROR_INVALID_SCHEMA);
+        expect(await validateFlairConfig({value: "[{}]", isEditing: false})).toEqual(ERRORS.INVALID_SCHEMA);
     });
 });
 
@@ -39,7 +39,7 @@ describe("validateCustomTimezone", () => {
         "00:00",
         "0",
     ])("validateCustomTimezone(%s) should return string", async input => {
-        expect(await validateCustomTimezone({value: input, isEditing: false})).toEqual(ERROR_INVALID_TIMEZONE);
+        expect(await validateCustomTimezone({value: input, isEditing: false})).toEqual(ERRORS.INVALID_TIMEZONE);
     });
 });
 
@@ -56,6 +56,6 @@ describe("validateCustomLocale", () => {
         "_lib",
         "aww",
     ])("validateCustomLocale(%s) should return string", async input => {
-        expect(await validateCustomLocale({value: input, isEditing: false})).toEqual(ERROR_INVALID_LOCALE);
+        expect(await validateCustomLocale({value: input, isEditing: false})).toEqual(ERRORS.INVALID_LOCALE);
     });
 });

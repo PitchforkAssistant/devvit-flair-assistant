@@ -1,27 +1,39 @@
-export const DEFAULT_HEADER_TEMPLATE = "Hi {{author}}! Thanks for posting to /r/{{subreddit}}. Unfortunately, [your {{kind}}]({{permalink}}) was removed for the following reason:";
+// Field labels
+export const LABELS = {
+    HEADER_TEMPLATE: "Header template",
+    FOOTER_TEMPLATE: "Footer template",
+    FLAIR_CONFIG: "Flair configuration (JSON)",
+    ACTION_DEBOUNCE: "Action debounce (seconds)",
+    CUSTOM_DATE_GROUP: "Options for custom date placeholders",
+    CUSTOM_DATE_TEMPLATE: "Date format template (e.g. yyyy-MM-dd hh-mm-ss)",
+    CUSTOM_TIMEZONE: "Timezone offset or identifier (e.g. UTC, +02:00, America/New_York, etc)",
+    CUSTOM_LOCALE: "Locale (e.g enUS, de, etc)",
+};
 
-export const DEFAULT_FOOTER_TEMPLATE = "If you have questions about this, please [contact our mods via moderator mail](https://www.reddit.com/message/compose?to={{subreddit}}) rather than replying here. Thank you!";
+// Default values
 
-export const DEFAULT_FLAIR_CONFIG = "[]";
+export const DEFAULTS = {
+    HEADER_TEMPLATE: "Hi {{author}}! Thanks for posting to /r/{{subreddit}}. Unfortunately, [your {{kind}}]({{permalink}}) was removed for the following reason:",
+    FOOTER_TEMPLATE: "If you have questions about this, please [contact our mods via moderator mail](https://www.reddit.com/message/compose?to={{subreddit}}) rather than replying here. Thank you!",
+    FLAIR_CONFIG: "[]",
+    ACTION_DEBOUNCE: 10,
+    CUSTOM_DATE_TEMPLATE: "yyyy-MM-dd hh-mm-ss",
+    CUSTOM_TIMEZONE: "UTC",
+    CUSTOM_LOCALE: "enUS",
+};
 
-export const DEFAULT_ACTION_DEBOUNCE = 10;
+// Links
+export const LINKS = {
+    SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/bq0mGGhP",
+    TIMEFORMAT: "https://date-fns.org/v2.30.0/docs/format",
+};
 
-export const DEFAULT_CUSTOM_TIMEFORMAT = "yyyy-MM-dd hh-mm-ss";
-
-export const DEFAULT_CUSTOM_TIMEZONE = "00:00";
-
-export const DEFAULT_CUSTOM_LOCALE = "enUS";
-
-export const SCHEMA_VALIDATOR_URL = "https://www.jsonschemavalidator.net/s/bq0mGGhP";
-
-export const ERROR_INVALID_JSON = "Failed to parse JSON, the syntax is likely invalid.";
-
-export const ERROR_INVALID_SCHEMA = `Failed to validate against config schema, try it at: ${SCHEMA_VALIDATOR_URL}`;
-
-export const ERROR_INVALID_ACTION_DEBOUNCE = "Action debounce must be a positive number.";
-
-export const ERROR_INVALID_TIMEFORMAT = "Invalid timeformat, see: https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table";
-
-export const ERROR_INVALID_TIMEZONE = "That is not a valid UTC offset or TZ identifier.";
-
-export const ERROR_INVALID_LOCALE = "That is not a valid locale.";
+// Errors
+export const ERRORS = {
+    INVALID_JSON: "Failed to parse JSON, the syntax is likely invalid.",
+    INVALID_SCHEMA: `Failed to validate against config schema, try it at: ${LINKS.SCHEMA_VALIDATOR}`,
+    INVALID_ACTION_DEBOUNCE: "Action debounce must be a positive number.",
+    INVALID_TIMEFORMAT: `Invalid timeformat, see: ${LINKS.TIMEFORMAT}`,
+    INVALID_TIMEZONE: "That is not a valid UTC offset or TZ identifier.",
+    INVALID_LOCALE: "That is not a valid locale.",
+};

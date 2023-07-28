@@ -1,6 +1,6 @@
 import {Devvit} from "@devvit/public-api";
 import {handleFlairUpdate, validateActionDebounce, validateCustomLocale, validateCustomTimeformat, validateCustomTimezone, validateFlairConfig} from "./handlers.js";
-import {DEFAULT_ACTION_DEBOUNCE, DEFAULT_CUSTOM_LOCALE, DEFAULT_CUSTOM_TIMEFORMAT, DEFAULT_CUSTOM_TIMEZONE, DEFAULT_FLAIR_CONFIG, DEFAULT_FOOTER_TEMPLATE, DEFAULT_HEADER_TEMPLATE} from "./constants.js";
+import {LABELS, DEFAULTS} from "./constants.js";
 
 Devvit.configure({
     redditAPI: true,
@@ -10,52 +10,52 @@ Devvit.addSettings([
     {
         type: "paragraph",
         name: "headerTemplate",
-        defaultValue: DEFAULT_HEADER_TEMPLATE,
-        label: "Enter your header template:",
+        defaultValue: DEFAULTS.HEADER_TEMPLATE,
+        label: LABELS.HEADER_TEMPLATE,
     },
     {
         type: "paragraph",
         name: "footerTemplate",
-        defaultValue: DEFAULT_FOOTER_TEMPLATE,
-        label: "Enter your footer template:",
+        defaultValue: DEFAULTS.FOOTER_TEMPLATE,
+        label: LABELS.FOOTER_TEMPLATE,
     },
     {
         type: "paragraph",
         name: "flairConfig",
-        defaultValue: DEFAULT_FLAIR_CONFIG,
-        label: "Enter your flair config as raw JSON:",
+        defaultValue: DEFAULTS.FLAIR_CONFIG,
+        label: LABELS.FLAIR_CONFIG,
         onValidate: validateFlairConfig,
     },
     {
         type: "number",
         name: "actionDebounce",
-        defaultValue: DEFAULT_ACTION_DEBOUNCE,
-        label: "Skip certain actions if they were already performed in the last X seconds:",
+        defaultValue: DEFAULTS.ACTION_DEBOUNCE,
+        label: LABELS.ACTION_DEBOUNCE,
         onValidate: validateActionDebounce,
     },
     {
         type: "group",
-        label: "Formatting options for custom time placeholders",
+        label: LABELS.CUSTOM_DATE_GROUP,
         fields: [
             {
                 type: "string",
                 name: "customTimeformat",
-                defaultValue: DEFAULT_CUSTOM_TIMEFORMAT,
-                label: "Enter your custom timeformat:",
+                defaultValue: DEFAULTS.CUSTOM_DATE_TEMPLATE,
+                label: LABELS.CUSTOM_DATE_TEMPLATE,
                 onValidate: validateCustomTimeformat,
             },
             {
                 type: "string",
                 name: "customTimezone",
-                defaultValue: DEFAULT_CUSTOM_TIMEZONE,
-                label: "Enter timezone's offset or indentifier:",
+                defaultValue: DEFAULTS.CUSTOM_TIMEZONE,
+                label: LABELS.CUSTOM_TIMEZONE,
                 onValidate: validateCustomTimezone,
             },
             {
                 type: "string",
                 name: "customLocale",
-                defaultValue: DEFAULT_CUSTOM_LOCALE,
-                label: "Enter locale code:",
+                defaultValue: DEFAULTS.CUSTOM_LOCALE,
+                label: LABELS.CUSTOM_LOCALE,
                 onValidate: validateCustomLocale,
             },
         ],

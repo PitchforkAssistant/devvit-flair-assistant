@@ -4,7 +4,7 @@ import AjvModule from "ajv";
 import {FlairEntries} from "./types.js";
 import {flairEntriesSchema} from "./schema.js";
 import {getLocaleFromString, hasPerformedAction, hasPerformedActions, logError, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
-import {DEFAULT_ACTION_DEBOUNCE, ERROR_INVALID_ACTION_DEBOUNCE, ERROR_INVALID_JSON, ERROR_INVALID_LOCALE, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEFORMAT, ERROR_INVALID_TIMEZONE} from "./constants.js";
+import {DEFAULTS, ERRORS} from "./constants.js";
 import {getTimezoneOffset} from "date-fns-tz";
 import {enUS} from "date-fns/locale";
 
@@ -16,35 +16,35 @@ export async function validateFlairConfig (event: SettingsFormFieldValidatorEven
     try {
         const valid = validate(JSON.parse(config?.toString() ?? "") as FlairEntries);
         if (!valid) {
-            return ERROR_INVALID_SCHEMA;
+            return ERRORS.INVALID_SCHEMA;
         }
     } catch (e) {
-        return ERROR_INVALID_JSON;
+        return ERRORS.INVALID_JSON;
     }
 }
 
 export async function validateActionDebounce (event: SettingsFormFieldValidatorEvent<number>) {
     const actionDebounce = Number(event?.value);
     if (isNaN(actionDebounce) || actionDebounce < 0) {
-        return ERROR_INVALID_ACTION_DEBOUNCE;
+        return ERRORS.INVALID_ACTION_DEBOUNCE;
     }
 }
 
 export async function validateCustomTimeformat (event: SettingsFormFieldValidatorEvent<string>) {
     if (!safeTimeformat(new Date(), event?.value?.toString() ?? "", "UTC", enUS)) {
-        return ERROR_INVALID_TIMEFORMAT;
+        return ERRORS.INVALID_TIMEFORMAT;
     }
 }
 
 export async function validateCustomTimezone (event: SettingsFormFieldValidatorEvent<string>) {
     if (isNaN(getTimezoneOffset(event?.value?.toString() ?? ""))) {
-        return ERROR_INVALID_TIMEZONE;
+        return ERRORS.INVALID_TIMEZONE;
     }
 }
 
 export async function validateCustomLocale (event: SettingsFormFieldValidatorEvent<string>) {
     if (!getLocaleFromString(event?.value?.toString() ?? "")) {
-        return ERROR_INVALID_LOCALE;
+        return ERRORS.INVALID_LOCALE;
     }
 }
 
@@ -73,7 +73,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     const customTimeformat = allSettings["customTimeformat"]?.toString() ?? "";
     const customTimezone = allSettings["customTimezone"]?.toString() ?? "00:00";
     const customLocale = getLocaleFromString(allSettings["customLocale"]?.toString() ?? "") ?? enUS;
-    const actionDebounce = toNumberOrDefault(allSettings["actionDebounce"], DEFAULT_ACTION_DEBOUNCE);
+    const actionDebounce = toNumberOrDefault(allSettings["actionDebounce"], DEFAULTS.ACTION_DEBOUNCE);
     const fullFlairConfig = JSON.parse(allSettings["flairConfig"]?.toString() ?? "") as FlairEntries;
     if (!validate(fullFlairConfig)) {
         console.log("Invalid config upon flair update!");
