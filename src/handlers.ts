@@ -70,7 +70,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     const allSettings = await context.settings.getAll();
     const headerTemplate = allSettings["headerTemplate"]?.toString() ?? "";
     const footerTemplate = allSettings["footerTemplate"]?.toString() ?? "";
-    const customTimeformat = allSettings["customTimeformat"]?.toString() ?? "";
+    const customTimeformat = allSettings["customDateTemplate"]?.toString() ?? "";
     const customTimezone = allSettings["customTimezone"]?.toString() ?? "00:00";
     const customLocale = getLocaleFromString(allSettings["customLocale"]?.toString() ?? "") ?? enUS;
     const actionDebounce = toNumberOrDefault(allSettings["actionDebounce"], DEFAULTS.ACTION_DEBOUNCE);
