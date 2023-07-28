@@ -1,6 +1,6 @@
 import {Devvit} from "@devvit/public-api";
-import {handleFlairUpdate, validateActionDebounce, validateCustomTimeformat, validateFlairConfig} from "./handlers.js";
-import {DEFAULT_ACTION_DEBOUNCE, DEFAULT_CUSTOM_TIMEFORMAT, DEFAULT_FLAIR_CONFIG, DEFAULT_FOOTER_TEMPLATE, DEFAULT_HEADER_TEMPLATE} from "./constants.js";
+import {handleFlairUpdate, validateActionDebounce, validateCustomLocale, validateCustomTimeformat, validateCustomTimezone, validateFlairConfig} from "./handlers.js";
+import {DEFAULT_ACTION_DEBOUNCE, DEFAULT_CUSTOM_LOCALE, DEFAULT_CUSTOM_TIMEFORMAT, DEFAULT_CUSTOM_TIMEZONE, DEFAULT_FLAIR_CONFIG, DEFAULT_FOOTER_TEMPLATE, DEFAULT_HEADER_TEMPLATE} from "./constants.js";
 
 Devvit.configure({
     redditAPI: true,
@@ -20,11 +20,11 @@ Devvit.addSettings([
         label: "Enter your footer template:",
     },
     {
-        type: "string",
-        name: "customTimeformat",
-        defaultValue: DEFAULT_CUSTOM_TIMEFORMAT,
-        label: "Enter your custom timeformat:",
-        onValidate: validateCustomTimeformat,
+        type: "paragraph",
+        name: "flairConfig",
+        defaultValue: DEFAULT_FLAIR_CONFIG,
+        label: "Enter your flair config as raw JSON:",
+        onValidate: validateFlairConfig,
     },
     {
         type: "number",
@@ -34,11 +34,31 @@ Devvit.addSettings([
         onValidate: validateActionDebounce,
     },
     {
-        type: "paragraph",
-        name: "flairConfig",
-        defaultValue: DEFAULT_FLAIR_CONFIG,
-        label: "Enter your flair config as raw JSON:",
-        onValidate: validateFlairConfig,
+        type: "group",
+        label: "Formatting options for custom time placeholders",
+        fields: [
+            {
+                type: "string",
+                name: "customTimeformat",
+                defaultValue: DEFAULT_CUSTOM_TIMEFORMAT,
+                label: "Enter your custom timeformat:",
+                onValidate: validateCustomTimeformat,
+            },
+            {
+                type: "string",
+                name: "customTimezone",
+                defaultValue: DEFAULT_CUSTOM_TIMEZONE,
+                label: "Enter timezone's offset or indentifier:",
+                onValidate: validateCustomTimezone,
+            },
+            {
+                type: "string",
+                name: "customLocale",
+                defaultValue: DEFAULT_CUSTOM_LOCALE,
+                label: "Enter locale code:",
+                onValidate: validateCustomLocale,
+            },
+        ],
     },
 ]);
 

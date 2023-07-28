@@ -3,8 +3,9 @@ import {FlairEntries} from "./types.js";
 
 export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
     $schema: "http://json-schema.org/draft-07/schema#",
-    additionalProperties: false,
+    type: "array",
     items: {
+        type: "object",
         additionalProperties: false,
         properties: {
             action: {
@@ -114,7 +115,5 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
         required: [
             "templateId",
         ],
-        type: "object",
     },
-    type: "array",
 };

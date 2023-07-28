@@ -3,8 +3,10 @@ import {BanUserOptions, Context, OnTriggerEvent, SetUserFlairOptions, SettingsFo
 import AjvModule from "ajv";
 import {FlairEntries} from "./types.js";
 import {flairEntriesSchema} from "./schema.js";
-import {hasPerformedAction, hasPerformedActions, logError, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
-import {DEFAULT_ACTION_DEBOUNCE, ERROR_INVALID_ACTION_DEBOUNCE, ERROR_INVALID_JSON, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEFORMAT} from "./constants.js";
+import {getLocaleFromString, hasPerformedAction, hasPerformedActions, logError, replacePlaceholders, safeTimeformat, toNumberOrDefault} from "./helpers.js";
+import {DEFAULT_ACTION_DEBOUNCE, ERROR_INVALID_ACTION_DEBOUNCE, ERROR_INVALID_JSON, ERROR_INVALID_LOCALE, ERROR_INVALID_SCHEMA, ERROR_INVALID_TIMEFORMAT, ERROR_INVALID_TIMEZONE} from "./constants.js";
+import {getTimezoneOffset} from "date-fns-tz";
+import {enUS} from "date-fns/locale";
 
 const ajv = new AjvModule.default();
 const validate = ajv.compile(flairEntriesSchema);
@@ -29,9 +31,20 @@ export async function validateActionDebounce (event: SettingsFormFieldValidatorE
 }
 
 export async function validateCustomTimeformat (event: SettingsFormFieldValidatorEvent<string>) {
-    const config = event?.value?.toString();
-    if (!safeTimeformat(new Date(), config?.toString() ?? "")) {
+    if (!safeTimeformat(new Date(), event?.value?.toString() ?? "", "UTC", enUS)) {
         return ERROR_INVALID_TIMEFORMAT;
+    }
+}
+
+export async function validateCustomTimezone (event: SettingsFormFieldValidatorEvent<string>) {
+    if (isNaN(getTimezoneOffset(event?.value?.toString() ?? ""))) {
+        return ERROR_INVALID_TIMEZONE;
+    }
+}
+
+export async function validateCustomLocale (event: SettingsFormFieldValidatorEvent<string>) {
+    if (!getLocaleFromString(event?.value?.toString() ?? "")) {
+        return ERROR_INVALID_LOCALE;
     }
 }
 
@@ -58,6 +71,8 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     const headerTemplate = allSettings["headerTemplate"]?.toString() ?? "";
     const footerTemplate = allSettings["footerTemplate"]?.toString() ?? "";
     const customTimeformat = allSettings["customTimeformat"]?.toString() ?? "";
+    const customTimezone = allSettings["customTimezone"]?.toString() ?? "00:00";
+    const customLocale = getLocaleFromString(allSettings["customLocale"]?.toString() ?? "") ?? enUS;
     const actionDebounce = toNumberOrDefault(allSettings["actionDebounce"], DEFAULT_ACTION_DEBOUNCE);
     const fullFlairConfig = JSON.parse(allSettings["flairConfig"]?.toString() ?? "") as FlairEntries;
     if (!validate(fullFlairConfig)) {
@@ -123,8 +138,8 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     if (flairConfig.ban) {
         // Avoids duplicating bans if the user was already banned.
         if (!await hasPerformedAction(context.reddit, subredditName, authorId, "banuser", actionDebounce, false, event.moderator?.id)) {
-            const message = replacePlaceholders(flairConfig.ban.message, event, customTimeformat);
-            const note = replacePlaceholders(flairConfig.ban.note, event, customTimeformat);
+            const message = replacePlaceholders(flairConfig.ban.message, event, customTimeformat, customTimezone, customLocale);
+            const note = replacePlaceholders(flairConfig.ban.note, event, customTimeformat, customTimezone, customLocale);
             const banOptions: BanUserOptions = {
                 username: author,
                 duration: flairConfig.ban.duration,
@@ -152,6 +167,8 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
                     flairConfig.comment.body,
                     event,
                     customTimeformat,
+                    customTimezone,
+                    customLocale,
                     flairConfig.comment.headerFooter ? headerTemplate : "",
                     flairConfig.comment.headerFooter ? footerTemplate : ""
                 ),

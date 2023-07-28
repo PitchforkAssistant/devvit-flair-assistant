@@ -1,7 +1,8 @@
 import {ModAction} from "@devvit/protos";
 import {ModActionType, RedditAPIClient} from "@devvit/public-api";
-import {format} from "date-fns";
-import {enUS} from "date-fns/locale";
+import {Locale} from "date-fns";
+import {formatInTimeZone} from "date-fns-tz";
+import * as locales from "date-fns/locale";
 
 export function domainFromUrlString (urlString: string): string {
     try {
@@ -12,9 +13,9 @@ export function domainFromUrlString (urlString: string): string {
     }
 }
 
-export function safeTimeformat (datetime: Date, timeformat: string, locale = enUS): string {
+export function safeTimeformat (datetime: Date, timeformat: string, timezone: string, locale: Locale): string {
     try {
-        return format(datetime, timeformat, {locale});
+        return formatInTimeZone(datetime, timezone, timeformat, {locale});
     } catch (e) {
         return "";
     }
@@ -29,11 +30,22 @@ export function toNumberOrDefault (input: unknown, defaultValue: number): number
     }
 }
 
-export function getTimeDeltaInSeconds (a: Date, b: Date): number {
-    if (!a || !b) {
-        return Infinity;
+export function getLocaleFromString (input: string): Locale | undefined {
+    const locale = Object.keys(locales).find(key => key.toLowerCase() === input.toLowerCase());
+    if (locale) {
+        return locales[locale] as Locale;
     }
-    return Math.abs(a.getTime() - b.getTime()) / 1000;
+}
+
+export function isValidDate (date: Date): boolean {
+    return !isNaN(date.getTime());
+}
+
+export function getTimeDeltaInSeconds (a: Date, b: Date): number {
+    if (isValidDate(a) && isValidDate(b)) {
+        return Math.abs(a.getTime() - b.getTime()) / 1000;
+    }
+    return Infinity;
 }
 
 export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds: number, includeParent: boolean, moderatorId?: string,): Promise<boolean> {
@@ -68,7 +80,7 @@ export function logError (note: string, error: unknown): void {
     console.error(error);
 }
 
-export function replacePlaceholders (text: string, modAction: ModAction, timeformat: string, header = "", footer = ""): string {
+export function replacePlaceholders (text: string, modAction: ModAction, timeformat: string, timezone: string, locale: Locale, header = "", footer = ""): string {
     // Skip everything if inputs are empty or contain no placeholders.
     if (!hasPlaceholders(text) && !hasPlaceholders(header) && !hasPlaceholders(footer)) {
         return text;
@@ -102,21 +114,19 @@ export function replacePlaceholders (text: string, modAction: ModAction, timefor
         "{{link_flair_template_id}}": modAction.targetPost?.linkFlair?.templateId ?? "",
         "{{time_iso}}": time.toISOString(),
         "{{time_unix}}": (time.getTime() / 1000).toString(),
+        "{{time_custom}}": "",
+        "{{created_iso}}": isValidDate(createdAt) ? createdAt.toISOString() : "",
+        "{{created_unix}}": isValidDate(createdAt) ? (time.getTime() / 1000).toString() : "",
+        "{{created_custom}}": "",
+        "{{actioned_iso}}": isValidDate(actionedAt) ? createdAt.toISOString() : "",
+        "{{actioned_unix}}": isValidDate(actionedAt) ? (time.getTime() / 1000).toString() : "",
+        "{{actioned_custom}}": "",
     };
 
-    // These might be invalid dates.
-    if (createdAt) {
-        replacements["{{created_iso}}"] = createdAt.toISOString();
-        replacements["{{created_unix}}"] = (createdAt.getTime() / 1000).toString();
-    }
-    if (actionedAt) {
-        replacements["{{actioned_iso}}"] = actionedAt.toISOString();
-        replacements["{{actioned_unix}}"] = (actionedAt.getTime() / 1000).toString();
-    }
     if (timeformat) {
-        replacements["{{time_custom}}"] = safeTimeformat(time, timeformat);
-        replacements["{{actioned_custom}}"] = safeTimeformat(actionedAt, timeformat);
-        replacements["{{created_custom}}"] = safeTimeformat(createdAt, timeformat);
+        replacements["{{time_custom}}"] = safeTimeformat(time, timeformat, timezone, locale);
+        replacements["{{actioned_custom}}"] = safeTimeformat(actionedAt, timeformat, timezone, locale);
+        replacements["{{created_custom}}"] = safeTimeformat(createdAt, timeformat, timezone, locale);
     }
 
     for (const [placeholder, replacement] of Object.entries(replacements)) {
@@ -124,7 +134,7 @@ export function replacePlaceholders (text: string, modAction: ModAction, timefor
     }
 
     if (header || footer) {
-        return `${replacePlaceholders(header, modAction, timeformat)}\n\n${text}\n\n${replacePlaceholders(footer, modAction, timeformat)}`;
+        return `${replacePlaceholders(header, modAction, timeformat, timezone, locale)}\n\n${text}\n\n${replacePlaceholders(footer, modAction, timeformat, timezone, locale)}`;
     } else {
         return text;
     }
