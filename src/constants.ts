@@ -10,6 +10,11 @@ export const LABELS = {
     CUSTOM_LOCALE: "Locale (e.g enUS, de, etc)",
 };
 
+// Help labels
+export const HELP_TEXT = {
+    FLAIR_CONFIG: "Read more: https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_flair_config",
+};
+
 // Default values
 
 export const DEFAULTS = {

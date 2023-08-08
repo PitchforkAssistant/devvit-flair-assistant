@@ -1,7 +1,7 @@
 import {Devvit} from "@devvit/public-api";
 import {handleFlairUpdate} from "./handlers/events.js";
 import {validateActionDebounce, validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "./handlers/validators.js";
-import {LABELS, DEFAULTS} from "./constants.js";
+import {LABELS, HELP_TEXT, DEFAULTS} from "./constants.js";
 
 Devvit.configure({
     redditAPI: true,
@@ -25,6 +25,7 @@ Devvit.addSettings([
         name: "flairConfig",
         defaultValue: DEFAULTS.FLAIR_CONFIG,
         label: LABELS.FLAIR_CONFIG,
+        helpText: HELP_TEXT.FLAIR_CONFIG,
         onValidate: validateFlairConfig,
     },
     {
