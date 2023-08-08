@@ -3,6 +3,11 @@ import {Locale} from "date-fns";
 import {isValidDate, safeTimeformat} from "./dateHelpers.js";
 import {domainFromUrlString} from "./miscHelpers.js";
 
+// Devvit does not support string.replaceAll() even if ES2021.String is specified in tsconfig.json.
+function replaceAll (text: string, placeholder: string, replacement:string) : string {
+    return text.replace(new RegExp(placeholder, "g"), replacement);
+}
+
 export function hasPlaceholders (text: string): boolean {
     return !!text && text.includes("{{") && text.includes("}}");
 }
@@ -14,7 +19,7 @@ export function replacePlaceholders (text: string, modAction: ModAction, timefor
     }
 
     // Replace moderator placeholders first to prevent exploits revealing moderator names.
-    text = text.replace("{{mod}}", modAction.moderator?.name ?? "");
+    text = replaceAll(text, "{{mod}}", modAction.moderator?.name ?? "");
 
     const postId = modAction.targetPost?.id.substring(3) ?? "";
     const time = new Date();
@@ -57,7 +62,7 @@ export function replacePlaceholders (text: string, modAction: ModAction, timefor
     }
 
     for (const [placeholder, replacement] of Object.entries(replacements)) {
-        text = text.replace(placeholder, replacement);
+        text = replaceAll(text, placeholder, replacement);
     }
 
     if (header || footer) {
