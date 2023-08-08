@@ -100,6 +100,20 @@ This is an optional field that defines whether the post should be locked. If it 
 &nbsp;
 
 
+#### `ignoreReports`
+
+| Key      | `lock`  |
+| :------- | :------ |
+| Value    | boolean |
+| Required | No      |
+
+This is an optional field that defines whether the post's reports should be set to ignored. If it is omitted or false, the reports are not ignored, but already ignored reports will not be unignored.
+
+---
+
+&nbsp;
+
+
 #### `clearPostFlair`
 
 | Key      | `clearPostFlair` |

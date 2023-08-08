@@ -102,6 +102,7 @@
             "distinguish": true,
             "headerFooter": true
         },
+        "ignoreReports": true,
         "lock": true
     }
 ]

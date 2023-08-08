@@ -87,6 +87,10 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "boolean",
                 nullable: true,
             },
+            ignoreReports: {
+                type: "boolean",
+                nullable: true,
+            },
             templateId: {
                 type: "string",
             },

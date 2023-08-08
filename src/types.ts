@@ -27,6 +27,7 @@ export interface FlairEntry {
     contributor?: "add" | "remove";
     ban?: FlairBan;
     lock?: boolean;
+    ignoreReports?: boolean;
     clearPostFlair?: boolean;
 }
 

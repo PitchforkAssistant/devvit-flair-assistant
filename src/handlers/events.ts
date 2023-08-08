@@ -4,7 +4,7 @@ import {FlairEntries} from "../types.js";
 import {logError, toNumberOrDefault} from "../helpers/miscHelpers.js";
 import {replacePlaceholders} from "../helpers/placeholderHelpers.js";
 import {getLocaleFromString} from "../helpers/dateHelpers.js";
-import {hasPerformedAction, hasPerformedActions} from "../helpers/redditHelpers.js";
+import {hasPerformedAction, hasPerformedActions, ignoreReportsByPostId, lockByPostId} from "../helpers/redditHelpers.js";
 import {DEFAULTS} from "../constants.js";
 import {enUS} from "date-fns/locale";
 import {validateFlairEntriesSchema} from "./validators.js";
@@ -149,14 +149,21 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
         }
     }
 
+    // Handle Ignore Reports
+    if (flairConfig.ignoreReports) {
+        console.log(`Ignoring reports on post ${postId}`);
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, "ignorereports", actionDebounce, false, event.moderator?.id)) {
+            ignoreReportsByPostId(context.reddit, postId).catch(e => logError(`Failed to ignore reports for post ${postId}`, e));
+        } else {
+            console.log(`Skipped ignore reports on post ${postId} because it got an ignore reports action in the past ${actionDebounce} seconds.`);
+        }
+    }
+
     // Handle Lock
     if (flairConfig.lock) {
         console.log(`Locking post ${postId}`);
         if (!await hasPerformedAction(context.reddit, subredditName, postId, "lock", actionDebounce, false, event.moderator?.id)) {
-            const post = await context.reddit.getPostById(postId).catch(e => logError(`Failed to get ${postId}`, e));
-            if (post) {
-                post.lock().catch(e => logError(`Failed to lock post ${postId}`, e));
-            }
+            lockByPostId(context.reddit, postId).catch(e => logError(`Failed to lock post ${postId}`, e));
         } else {
             console.log(`Skipped lock on post ${postId} because it got a lock action in the past ${actionDebounce} seconds.`);
         }
