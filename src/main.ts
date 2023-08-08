@@ -38,6 +38,7 @@ Devvit.addSettings([
     {
         type: "group",
         label: LABELS.CUSTOM_DATE_GROUP,
+        helpText: HELP_TEXT.CUSTOM_DATE_GROUP,
         fields: [
             {
                 type: "string",
