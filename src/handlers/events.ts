@@ -4,7 +4,7 @@ import {FlairEntries} from "../types.js";
 import {logError, toNumberOrDefault} from "../helpers/miscHelpers.js";
 import {replacePlaceholders} from "../helpers/placeholderHelpers.js";
 import {getLocaleFromString} from "../helpers/dateHelpers.js";
-import {hasPerformedAction, hasPerformedActions, ignoreReportsByPostId, lockByPostId} from "../helpers/redditHelpers.js";
+import {hasPerformedAction, hasPerformedActions} from "../helpers/redditHelpers.js";
 import {DEFAULTS} from "../constants.js";
 import {enUS} from "date-fns/locale";
 import {validateFlairEntriesSchema} from "./validators.js";
@@ -57,7 +57,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Actions
     if (flairConfig.action) {
         // Avoids duplicating actions if the post was already approved/removed/spammed.
-        if (!await hasPerformedAction(context.reddit, subredditName, postId, `${flairConfig.action}link`, actionDebounce, false, event.moderator?.id)) {
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, `${flairConfig.action}link`, actionDebounce, false, event.moderator?.name)) {
             if (flairConfig.action === "remove") {
                 console.log(`Removing post ${postId}`);
                 context.reddit.remove(postId, false).catch(e => logError(`Failed to remove post ${postId}`, e));
@@ -98,7 +98,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Ban
     if (flairConfig.ban) {
         // Avoids duplicating bans if the user was already banned.
-        if (!await hasPerformedAction(context.reddit, subredditName, authorId, "banuser", actionDebounce, false, event.moderator?.id)) {
+        if (!await hasPerformedAction(context.reddit, subredditName, authorId, "banuser", actionDebounce, false, event.moderator?.name)) {
             const message = replacePlaceholders(flairConfig.ban.message, event, customTimeformat, customTimezone, customLocale);
             const note = replacePlaceholders(flairConfig.ban.note, event, customTimeformat, customTimezone, customLocale);
             const banOptions: BanUserOptions = {
@@ -120,7 +120,7 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Comment
     if (flairConfig.comment) {
         // Avoids duplicating removal reasons if the post already got a sticky/distinguish action, like when Toolbox is used.
-        if (!await hasPerformedActions(context.reddit, subredditName, postId, ["sticky", "distinguish"], actionDebounce, true, event.moderator?.id)) {
+        if (!await hasPerformedActions(context.reddit, subredditName, postId, ["sticky", "distinguish"], actionDebounce, true, event.moderator?.name)) {
             console.log(`Commenting on post ${postId}`);
             const commentOptions = {
                 id: postId,
@@ -152,8 +152,11 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Ignore Reports
     if (flairConfig.ignoreReports) {
         console.log(`Ignoring reports on post ${postId}`);
-        if (!await hasPerformedAction(context.reddit, subredditName, postId, "ignorereports", actionDebounce, false, event.moderator?.id)) {
-            ignoreReportsByPostId(context.reddit, postId).catch(e => logError(`Failed to ignore reports for post ${postId}`, e));
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, "ignorereports", actionDebounce, false, event.moderator?.name)) {
+            const post = await context.reddit.getPostById(postId).catch(e => logError(`Failed to fetch post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
+            if (post) {
+                return post.ignoreReports().catch(e => logError(`Failed to ignore reports for post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
+            }
         } else {
             console.log(`Skipped ignore reports on post ${postId} because it got an ignore reports action in the past ${actionDebounce} seconds.`);
         }
@@ -162,8 +165,11 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
     // Handle Lock
     if (flairConfig.lock) {
         console.log(`Locking post ${postId}`);
-        if (!await hasPerformedAction(context.reddit, subredditName, postId, "lock", actionDebounce, false, event.moderator?.id)) {
-            lockByPostId(context.reddit, postId).catch(e => logError(`Failed to lock post ${postId}`, e));
+        if (!await hasPerformedAction(context.reddit, subredditName, postId, "lock", actionDebounce, false, event.moderator?.name)) {
+            const post = await context.reddit.getPostById(postId).catch(e => logError(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`, e));
+            if (post) {
+                return post.lock().catch(e => logError(`Failed to ignore reports for post ${postId} in redditHelpers.lockByPostId`, e));
+            }
         } else {
             console.log(`Skipped lock on post ${postId} because it got a lock action in the past ${actionDebounce} seconds.`);
         }

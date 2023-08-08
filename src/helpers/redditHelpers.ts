@@ -2,9 +2,9 @@ import {ModActionType, RedditAPIClient} from "@devvit/public-api";
 import {logError} from "./miscHelpers.js";
 import {getTimeDeltaInSeconds} from "./dateHelpers.js";
 
-export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds: number, includeParent: boolean, moderatorId?: string): Promise<boolean> {
-    const modLog = await reddit.getModerationLog({subredditName, moderatorId, type: actionType, limit: 100, pageSize: 100}).all().catch(e => {
-        logError(`Failed to fetch ${actionType} log for ${subredditName} by ${moderatorId ?? ""}`, e);
+export async function hasPerformedAction (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionType: ModActionType, cutoffSeconds: number, includeParent: boolean, moderatorName?: string): Promise<boolean> {
+    const modLog = await reddit.getModerationLog({subredditName, moderatorId: moderatorName, type: actionType, limit: 100, pageSize: 100}).all().catch(e => {
+        logError(`Failed to fetch ${actionType} log for ${subredditName} by ${moderatorName ?? ""}`, e);
         return [];
     });
     for (const modAction of modLog) {
@@ -19,26 +19,8 @@ export async function hasPerformedAction (reddit: RedditAPIClient, subredditName
     return false;
 }
 
-export async function hasPerformedActions (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionTypes: ModActionType[], cutoffSeconds: number, includeParent: boolean, moderatorId?: string): Promise<boolean> {
-    const actionChecks = actionTypes.map(actionType => hasPerformedAction(reddit, subredditName, actionTargetId, actionType, cutoffSeconds, includeParent, moderatorId));
+export async function hasPerformedActions (reddit: RedditAPIClient, subredditName: string, actionTargetId: string, actionTypes: ModActionType[], cutoffSeconds: number, includeParent: boolean, moderatorName?: string): Promise<boolean> {
+    const actionChecks = actionTypes.map(actionType => hasPerformedAction(reddit, subredditName, actionTargetId, actionType, cutoffSeconds, includeParent, moderatorName));
     const results = await Promise.all(actionChecks);
     return results.includes(true);
-}
-
-export async function ignoreReportsByPostId (reddit: RedditAPIClient, postId: string): Promise<void> {
-    const post = await reddit.getPostById(postId).catch(e => logError(`Failed to fetch post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
-    if (post) {
-        return post.ignoreReports().catch(e => logError(`Failed to ignore reports for post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
-    } else {
-        return Promise.reject(`Failed to fetch post ${postId} in redditHelpers.ignoreReportsByPostId`);
-    }
-}
-
-export async function lockByPostId (reddit: RedditAPIClient, postId: string): Promise<void> {
-    const post = await reddit.getPostById(postId).catch(e => logError(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`, e));
-    if (post) {
-        return post.lock().catch(e => logError(`Failed to ignore reports for post ${postId} in redditHelpers.lockByPostId`, e));
-    } else {
-        return Promise.reject(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`);
-    }
 }
