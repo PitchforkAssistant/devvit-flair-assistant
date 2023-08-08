@@ -8,7 +8,7 @@ App: https://developers.reddit.com/apps/flairassistant
 
 Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
-Schema Validator/Example: https://www.jsonschemavalidator.net/s/bq0mGGhP
+Schema Validator/Example: https://www.jsonschemavalidator.net/s/gp4q1VrH
 
 
 # Configuration
@@ -39,7 +39,7 @@ The app skips certain actions if the moderator that set the post's flair already
 
 ## Flair Config
 
-This field accepts the configuration for each flair using a specific JSON structure. I would familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/lcnf4wjU). 
+This field accepts the configuration for each flair using a specific JSON structure. I would familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/gp4q1VrH). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 

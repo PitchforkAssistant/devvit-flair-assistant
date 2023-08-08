@@ -29,7 +29,7 @@ export const DEFAULTS = {
 
 // Links
 export const LINKS = {
-    SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/bq0mGGhP",
+    SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/gp4q1VrH",
     TIMEFORMAT: "https://date-fns.org/v2.30.0/docs/format",
 };
 
