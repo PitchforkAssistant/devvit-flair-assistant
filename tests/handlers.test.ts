@@ -1,5 +1,5 @@
 import {ERRORS} from "../src/constants.js";
-import {validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "../src/handlers.js";
+import {validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "../src/handlers/validators.js";
 import * as validTestConfig from "./validtestconfig.json";
 
 describe("validateFlairConfig", () => {

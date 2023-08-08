@@ -1,5 +1,7 @@
 import {de, enUS} from "date-fns/locale";
-import {domainFromUrlString, getLocaleFromString, getTimeDeltaInSeconds, hasPlaceholders, isValidDate, safeTimeformat, toNumberOrDefault} from "../src/helpers.js";
+import {domainFromUrlString, toNumberOrDefault} from "../src/helpers/miscHelpers.js";
+import {hasPlaceholders} from "../src/helpers/placeholderHelpers.js";
+import {getLocaleFromString, isValidDate, safeTimeformat, getTimeDeltaInSeconds} from "../src/helpers/dateHelpers.js";
 
 // Date object, timeformat, expected output.
 test.each([

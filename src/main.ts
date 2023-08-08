@@ -1,5 +1,6 @@
 import {Devvit} from "@devvit/public-api";
-import {handleFlairUpdate, validateActionDebounce, validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "./handlers.js";
+import {handleFlairUpdate} from "./handlers/events.js";
+import {validateActionDebounce, validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "./handlers/validators.js";
 import {LABELS, DEFAULTS} from "./constants.js";
 
 Devvit.configure({
