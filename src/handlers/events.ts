@@ -4,7 +4,7 @@ import {FlairEntries} from "../types.js";
 import {logError, toNumberOrDefault} from "../helpers/miscHelpers.js";
 import {replacePlaceholders} from "../helpers/placeholderHelpers.js";
 import {getLocaleFromString} from "../helpers/dateHelpers.js";
-import {hasPerformedAction, hasPerformedActions, ignoreReportsByPostId, lockByPostId} from "../helpers/redditHelpers.js";
+import {hasPerformedAction, hasPerformedActions, ignoreReportsByPostId, lockByPostId, submitModComment} from "../helpers/redditHelpers.js";
 import {DEFAULTS} from "../constants.js";
 import {enUS} from "date-fns/locale";
 import {validateFlairEntriesSchema} from "./validators.js";
@@ -122,28 +122,16 @@ export async function handleFlairUpdate (context: Context, event: OnTriggerEvent
         // Avoids duplicating removal reasons if the post already got a sticky/distinguish action, like when Toolbox is used.
         if (!await hasPerformedActions(context.reddit, subredditName, postId, ["sticky", "distinguish"], actionDebounce, true, event.moderator?.id)) {
             console.log(`Commenting on post ${postId}`);
-            const commentOptions = {
-                id: postId,
-                text: replacePlaceholders(
-                    flairConfig.comment.body,
-                    event,
-                    customTimeformat,
-                    customTimezone,
-                    customLocale,
-                    flairConfig.comment.headerFooter ? headerTemplate : "",
-                    flairConfig.comment.headerFooter ? footerTemplate : ""
-                ),
-            };
-            const comment = await context.reddit.submitComment(commentOptions);
-            console.log(`Commented on post ${postId} with comment ${comment.id}`);
-            if (flairConfig.comment.distinguish || flairConfig.comment.sticky) {
-                console.log(`Distinguishing comment ${comment.id}`);
-                comment.distinguish(flairConfig.comment.sticky).catch(e => logError(`Failed to distinguish comment ${comment.id}`, e));
-            }
-            if (flairConfig.comment.lock) {
-                console.log(`Locking comment ${comment.id}`);
-                comment.lock().catch(e => logError(`Failed to lock comment ${comment.id}`, e));
-            }
+            const commentBody = replacePlaceholders(
+                flairConfig.comment.body,
+                event,
+                customTimeformat,
+                customTimezone,
+                customLocale,
+                flairConfig.comment.headerFooter ? headerTemplate : "",
+                flairConfig.comment.headerFooter ? footerTemplate : ""
+            );
+            submitModComment(context.reddit, postId, commentBody, flairConfig.comment.distinguish, flairConfig.comment.sticky, flairConfig.comment.lock).catch(e => logError(`Failed to comment on post ${postId}`, e));
         } else {
             console.log(`Skipped comment on post ${postId} because it got a sticky/distinguish action in the past ${actionDebounce} seconds.`);
         }

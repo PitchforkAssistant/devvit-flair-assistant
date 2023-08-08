@@ -42,3 +42,17 @@ export async function lockByPostId (reddit: RedditAPIClient, postId: string): Pr
         return Promise.reject(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`);
     }
 }
+
+export async function submitModComment (reddit: RedditAPIClient, postId: string, commentBody: string, distinguish: boolean | undefined, sticky: boolean | undefined, lock: boolean | undefined): Promise<void> {
+    const comment = await reddit.submitComment({id: postId, text: commentBody}).catch(e => logError(`Failed to submit comment to post ${postId} in redditHelpers.submitModComment`, e));
+    if (comment) {
+        if (sticky || distinguish) {
+            await comment.distinguish(sticky).catch(e => logError(`Failed to distinguish comment ${comment.id} in redditHelpers.submitModComment`, e));
+        }
+        if (lock) {
+            await comment.lock().catch(e => logError(`Failed to lock comment ${comment.id} in redditHelpers.submitModComment`, e));
+        }
+    } else {
+        return Promise.reject(`Failed to submit comment to post ${postId} in redditHelpers.submitModComment`);
+    }
+}
