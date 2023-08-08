@@ -27,14 +27,15 @@ The first two fields in the app settings are the header and footer templates. Th
 The app skips certain actions if the moderator that set the post's flair already performed them. This field defines the maximum age in seconds that a moderator action can be for it to be skipped. This is necessary to prevent Toolbox removals that also set a flair from duplicating the actions linked to that flair. A cutoff of 10 seconds worked well in my testing and is the default. The actions that are checked and may be skipped are listed below.
 
 
-| Action   | Skip Condition                                                                                                  |
-| :------- | :-------------------------------------------------------------------------------------------------------------- |
-| Approve  | Skipped if the moderator already approved the flaired post in the past X seconds.                               |
-| Remove   | Skipped if the moderator already removed the flaired post in the past X seconds.                                |
-| Spam     | Skipped if the moderator already spammed the flaired post in the past X seconds.                                |
-| Lock     | Skipped if the moderator already locked the flaired post in the past X seconds.                                 |
-| Ban User | Skipped if the moderator already banned the post's author in the past X seconds.                                |
-| Comment  | Skipped if the moderator already stickied or distinguished a comment on the flaired post in the past X seconds. |
+| Action         | Skip Condition                                                                                                  |
+| :------------- | :-------------------------------------------------------------------------------------------------------------- |
+| Approve        | Skipped if the moderator already approved the flaired post in the past X seconds.                               |
+| Remove         | Skipped if the moderator already removed the flaired post in the past X seconds.                                |
+| Spam           | Skipped if the moderator already spammed the flaired post in the past X seconds.                                |
+| Ignore Reports | Skipped if the moderator already ignored reports on the post in the past X seconds.                             |
+| Lock           | Skipped if the moderator already locked the flaired post in the past X seconds.                                 |
+| Ban User       | Skipped if the moderator already banned the post's author in the past X seconds.                                |
+| Comment        | Skipped if the moderator already stickied or distinguished a comment on the flaired post in the past X seconds. |
 
 
 ## Flair Config
