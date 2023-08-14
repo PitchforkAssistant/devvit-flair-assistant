@@ -13,7 +13,7 @@ Schema Validator/Example: https://www.jsonschemavalidator.net/s/gp4q1VrH
 
 # Configuration
 
-This app has configurable settings for each of its subreddits. If you have installed it on your subreddit, you can find its settings at `https://developers.reddit.com/r/subreddit/apps/flairassistant` or by going to Mod Tools -> Installed Apps and clicking the Settings button next to flairassistant on new Reddit.
+This app has configurable settings for each of its subreddits. If you have installed it on your subreddit, you can find its settings at `https://developers.reddit.com/r/subreddit/apps/flairassistant` or by going to Mod Tools -> Installed Apps on new Reddit and clicking the Settings button next to Flair Assistant.
 
 
 ## Header and Footer
