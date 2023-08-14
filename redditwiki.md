@@ -472,7 +472,7 @@ This is the timezone used for `{{created_custom}}`, `{{actioned_custom}}`, and `
 
 ### Locale
 
-This field is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. It affects locale specific values such as the first day of the week, month names, abbrivations, etc. The default value is `en-US`. Below is a table of all supported locales:
+This field is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. It affects locale specific values such as the first day of the week, month names, abbrivations, etc. The default value is `enUS`. Below is a table of all supported locales:
 
 | Name                      | Value      |
 | :------------------------ | :--------- |
