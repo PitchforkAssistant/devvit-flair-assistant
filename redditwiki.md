@@ -347,27 +347,36 @@ Any placeholders that are not applicable to the post are replaced with an empty 
 
 Below is a list of all supported placeholders:
 
-| Placeholder                    | Description                                                    |
-| :----------------------------- | :------------------------------------------------------------- |
-| `{{author}}`                   | Username of the author                                         |
-| `{{subreddit}}`                | Display name of the subreddit                                  |
-| `{{body}}`                     | Post's body (*not recommended*)                                |
-| `{{title}}`                    | Title of the post                                              |
-| `{{kind}}`                     | Type of the post, always "submission"                          |
-| `{{permalink}}`                | Permalink to the post                                          |
-| `{{url}}`                      | Alias for `{{permalink}}`                                      |
-| `{{link}}`                     | The URL that the post links to, `{{permalink}}` for text posts |
-| `{{domain}}`                   | The domain that the post links to, blank for text posts        |
-| `{{id}}`                       | Post ID                                                        |
-| `{{author_id}}`                | Author's User ID                                               |
-| `{{subreddit_id}}`             | Subreddit's ID                                                 |
-| `{{mod}}`                      | Username of the mod that set the flair                         |
-| `{{author_flair_text}}`        | Text of the post author's user flair                           |
-| `{{author_flair_css_class}}`   | CSS class of the post author's user flair                      |
-| `{{author_flair_template_id}}` | Template ID of the post author's user flair                    |
-| `{{link_flair_text}}`          | Text of the post's flair                                       |
-| `{{link_flair_css_class}}`     | CSS class of the post's flair                                  |
-| `{{link_flair_template_id}}`   | Template ID of the post's flair                                |
+| Placeholder                    | Description                                                                                                       |
+| :----------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| `{{author}}`                   | Username of the author                                                                                            |
+| `{{subreddit}}`                | Display name of the subreddit                                                                                     |
+| `{{body}}`                     | Post's body (*not recommended*)                                                                                   |
+| `{{title}}`                    | Title of the post                                                                                                 |
+| `{{kind}}`                     | Type of the post, always "submission"                                                                             |
+| `{{permalink}}`                | Permalink to the post                                                                                             |
+| `{{url}}`                      | Alias for `{{permalink}}`                                                                                         |
+| `{{link}}`                     | The URL that the post links to, `{{permalink}}` for text posts                                                    |
+| `{{domain}}`                   | The domain that the post links to, blank for text posts                                                           |
+| `{{id}}`                       | Post ID                                                                                                           |
+| `{{author_id}}`                | Author's User ID                                                                                                  |
+| `{{subreddit_id}}`             | Subreddit's ID                                                                                                    |
+| `{{mod}}`                      | Username of the mod that set the flair                                                                            |
+| `{{author_flair_text}}`        | Text of the post author's user flair                                                                              |
+| `{{author_flair_css_class}}`   | CSS class of the post author's user flair                                                                         |
+| `{{author_flair_template_id}}` | Template ID of the post author's user flair                                                                       |
+| `{{link_flair_text}}`          | Text of the post's flair                                                                                          |
+| `{{link_flair_css_class}}`     | CSS class of the post's flair                                                                                     |
+| `{{link_flair_template_id}}`   | Template ID of the post's flair                                                                                   |
+| `{{time_iso}}`                 | Current time in the ISO 8601 format                                                                               |
+| `{{time_unix}}`                | Current time as the unix epoch in seconds                                                                         |
+| `{{time_custom}}`              | Current time as defined by the [custom date placeholder options](#wiki_custom_date_placeholder_options)           |
+| `{{created_iso}}`              | Post's creation time in the ISO 8601                                                                              |
+| `{{created_unix}}`             | Post's creation time as the unix epoch in seconds                                                                 |
+| `{{created_custom}}`           | Post's creation time as defined by the [custom date placeholder options](#wiki_custom_date_placeholder_options)   |
+| `{{actioned_iso}}`             | When the flair was set in the ISO 8601 format                                                                     |
+| `{{actioned_unix}}`            | When the flair was set as the unix epoch in seconds                                                               |
+| `{{actioned_custom}}`          | When the flair was set as defined by the [custom date placeholder options](#wiki_custom_date_placeholder_options) |
 
 
 ### Example 
