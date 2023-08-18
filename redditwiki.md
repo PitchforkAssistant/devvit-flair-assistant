@@ -8,6 +8,8 @@ App: https://developers.reddit.com/apps/flairassistant
 
 Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
+Flair Assistant Config Tool: https://pitchforkassistant.github.io/devvit-flair-assistant/
+
 Schema Validator/Example: https://www.jsonschemavalidator.net/s/gp4q1VrH
 
 
@@ -40,7 +42,9 @@ The app skips certain actions if the moderator that set the post's flair already
 
 ## Flair Config
 
-This field accepts the configuration for each flair using a specific JSON structure. I would familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/gp4q1VrH). 
+This field accepts the configuration for each flair using a specific JSON structure. You can generate it using the [Flair Assistant Config Tool](https://pitchforkassistant.github.io/devvit-flair-assistant/).
+
+If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/gp4q1VrH). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 
@@ -341,7 +345,7 @@ This is an optional field that defines whether the comment should be distinguish
 
 Placeholders are keywords surrounded by double curly brackets, they are case-sensitive. Placeholders are replaced with their values when an action is performed. 
 
-The ``{{mod}}`` placeholder is populated first to prevent crafted inputs from revealing the identidy of the moderator that triggered the action. The rest are populated in no particular order. 
+The ``{{mod}}`` placeholder is populated first to prevent crafted inputs from revealing the identity of the moderator that triggered the action. The rest are populated in no particular order. 
 
 Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). 
 

@@ -12,7 +12,7 @@ export const LABELS = {
 
 // Help labels
 export const HELP_TEXT = {
-    FLAIR_CONFIG: "Read more: https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_flair_config",
+    FLAIR_CONFIG: "Check the wiki or use this tool to generate a config: https://pitchforkassistant.github.io/devvit-flair-assistant/",
     CUSTOM_DATE_GROUP: "Read more: https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_custom_date_placeholder_options",
 };
 
