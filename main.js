@@ -36,7 +36,7 @@ function addAnother() {
                     el.parentElement.classList.toggle("disabled", !show);
                 }
             });
-            changedElement.parentElement.parentElement.querySelectorAll(`[for=${changedElement.dataset.toggles}]`).forEach(function (el) {
+            changedElement.parentElement.parentElement.querySelectorAll(`[name=${changedElement.dataset.toggles}]`).forEach(function (el) {
                 el.classList.toggle("disabled", !show);
             });
         });

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset='utf-8'>
@@ -165,8 +165,8 @@
             <p>This tool lets you to easily generate the flair configuration JSON used by the Flair Assistant app.</p>
             <div class="bottomButtons">
                 <a class="button" target="_blank" href="https://developers.reddit.com/apps/flairassistant">
-                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
-                        icon-name="external-outline" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
+                        fill="currentColor">
                         <path
                             d="M15.75 13H17v3.375A2.63 2.63 0 0114.375 19H3.625A2.63 2.63 0 011 16.375V5.625A2.629 2.629 0 013.625 3H7v1.25H3.625A1.377 1.377 0 002.25 5.625v10.75a1.377 1.377 0 001.375 1.375h10.75a1.377 1.377 0 001.375-1.375V13zm2.625-12h-5v1.25h3.491l-8.433 8.433.884.884 8.433-8.433v3.491H19v-5A.625.625 0 0018.375 1z">
                         </path>
@@ -174,16 +174,16 @@
                     App Page</a>
                 <a class="button" target="_blank"
                     href="https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant">
-                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
-                        icon-name="posts-outline" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
+                        fill="currentColor">
                         <path
                             d="M15 9.25H8V8h7v1.25zM15 11H8v1.25h7V11zm0 3H8v1.25h7V14zm4 3.375V5.625A1.627 1.627 0 0017.375 4H5.625A1.627 1.627 0 004 5.625v11.75A1.627 1.627 0 005.625 19h11.75A1.627 1.627 0 0019 17.375zM17.375 5.25a.375.375 0 01.375.375v11.75a.375.375 0 01-.375.375H5.625a.375.375 0 01-.375-.375V5.625a.375.375 0 01.375-.375h11.75zm-14.75 9.5a.375.375 0 01-.375-.375V2.624a.375.375 0 01.375-.374h11.75a.375.375 0 01.375.374H16A1.627 1.627 0 0014.375 1H2.625A1.627 1.627 0 001 2.624v11.751A1.627 1.627 0 002.625 16v-1.25z">
                         </path>
                     </svg>
                     Wiki Guide</a>
                 <a class="button" target="_blank" href="https://github.com/PitchforkAssistant/devvit-flair-assistant/">
-                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height="16" width="16"
-                        icon-name="posts-outline" fill="currentColor">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height="16" width="16"
+                        fill="currentColor">
                         <path
                             d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z">
                         </path>
@@ -193,17 +193,17 @@
         </div>
         <div id="left" class="panel">
             <h2>Input</h2>
-            <form name="flairConfig" id="flairConfigForm" action="">
+            <form name="flairConfig" id="flairConfigForm" action>
                 <div id="flairConfigsContainer">
                     <fieldset id="baseConfig" class="flairConfig">
                         <div class="option">
-                            <label for="flairTemplateId">Post Flair Template ID</label>
+                            <label name="flairTemplateId">Post Flair Template ID</label>
                             <input type="text" name="flairTemplateId" placeholder="00000000-0000-0000-0000-000000000000"
                                 class="templateId" maxlength="36" minlength="36" required>
                         </div>
 
                         <div class="option">
-                            <label for="flairAction">Action</label>
+                            <label name="flairAction">Action</label>
                             <select name="flairAction">
                                 <option value="none">Do Nothing</option>
                                 <option value="approve">Approve</option>
@@ -213,7 +213,7 @@
                         </div>
 
                         <div class="option">
-                            <label for="flairContributor">Contributor</label>
+                            <label name="flairContributor">Contributor</label>
                             <select name="flairContributor">
                                 <option value="none">Do Nothing</option>
                                 <option value="add">Add</option>
@@ -222,66 +222,66 @@
                         </div>
 
                         <div class="option">
-                            <label for="flairLock">Lock Post</label>
+                            <label name="flairLock">Lock Post</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairLock">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label for="flairClear">Clear Post Flair</label>
+                            <label name="flairClear">Clear Post Flair</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairClear">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label for="flairIgnore">Ignore Post Reports</label>
+                            <label name="flairIgnore">Ignore Post Reports</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairIgnore">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label for="flairCommentToggle">Comment</label>
+                            <label name="flairCommentToggle">Comment</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairCommentToggle" data-toggles="flairCommentGroup">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairCommentGroup" disabled>
-                                <label for="flairCommentDistinguish">Distinguish</label>
+                                <label name="flairCommentDistinguish">Distinguish</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentDistinguish"
                                         data-toggles="flairCommentSticky" checked>
-                                    <span class="slider">
+                                    <span class="slider"></span>
                                 </label>
 
-                                <label for="flairCommentSticky">Sticky</label>
+                                <label name="flairCommentSticky">Sticky</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentSticky" checked>
-                                    <span class="slider">
+                                    <span class="slider"></span>
                                 </label>
 
-                                <label for="flairCommentLock">Lock</label>
+                                <label name="flairCommentLock">Lock</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentLock">
-                                    <span class="slider">
+                                    <span class="slider"></span>
                                 </label>
 
-                                <label for="flairCommentHeaderFooter">Add Header & Footer</label>
+                                <label name="flairCommentHeaderFooter">Add Header & Footer</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentHeaderFooter" checked>
-                                    <span class="slider">
+                                    <span class="slider"></span>
                                 </label>
 
 
-                                <label for="flairComment">Comment
+                                <label name="flairComment">Comment
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
-                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
                                         <title>Supports Placeholders</title>
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
@@ -293,29 +293,29 @@
                         </div>
 
                         <div class="option">
-                            <label for="flairBanToggle">Ban</label>
+                            <label name="flairBanToggle">Ban</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairBanToggle" data-toggles="flairBanGroup">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairBanGroup" disabled>
-                                <label for="flairBanPerma">Permanent</label>
+                                <label name="flairBanPerma">Permanent</label>
 
                                 <label class="switch">
                                     <input type="checkbox" name="flairBanPerma" data-toggles="flairBanDuration"
                                         data-invert-toggles="true" checked>
-                                    <span class="slider">
+                                    <span class="slider"></span>
                                 </label>
-                                <label for="flairBanDuration" disabled class="disabled">Duration</label>
-                                <input type="number" min="1" max="999" name="flairBanDuration" class="disabled"
+                                <label name="flairBanDuration" class="disabled">Duration</label>
+                                <input type="number" min="1" max="999" name="flairBanDuration" disabled class="disabled"
                                     required>
-                                <label for="flairBanReason">Reason</label>
+                                <label name="flairBanReason">Reason</label>
                                 <input type="text" name="flairBanReason" minlength="1" maxlength="100" required
                                     placeholder="R1">
-                                <label for="flairBanNote">Note
+                                <label name="flairBanNote">Note
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
-                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
                                         <title>Supports Placeholders</title>
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
@@ -323,10 +323,10 @@
                                 </label>
                                 <input type="text" name="flairBanNote" minlength="1" maxlength="300" required
                                     placeholder="{{permalink}}">
-                                <label for="flairBanMessage">Message
+                                <label name="flairBanMessage">Message
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
-                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
                                         <title>Supports Placeholders</title>
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
@@ -338,21 +338,21 @@
                         </div>
 
                         <div class="option">
-                            <label for="flairUserFlairToggle">Set User Flair</label>
+                            <label name="flairUserFlairToggle">Set User Flair</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairUserFlairToggle" data-toggles="flairUserFlairGroup">
-                                <span class="slider">
+                                <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairUserFlairGroup" disabled>
-                                <label for="flairUserFlairTemplateId">User Flair Template ID</label>
+                                <label name="flairUserFlairTemplateId">User Flair Template ID</label>
                                 <input type="text" name="flairUserFlairTemplateId" class="templateId"
                                     placeholder="00000000-0000-0000-0000-000000000000">
-                                <label for="flairUserFlairCSSClass">CSS Class</label>
+                                <label name="flairUserFlairCSSClass">CSS Class</label>
                                 <input type="text" name="flairUserFlairCSSClass" placeholder="cssclass">
-                                <label for="flairUserFlairText">Flair Text
+                                <label name="flairUserFlairText">Flair Text
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
-                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
-                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
                                         <title>Supports Placeholders</title>
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
@@ -372,7 +372,7 @@
         </div>
         <div id="right" class="panel">
             <h2>Output</h2>
-            <textarea type="text" id="flairConfigOutput" rows="30" cols="70" readonly>[]</textarea>
+            <textarea id="flairConfigOutput" rows="30" cols="70" readonly>[]</textarea>
             <p id="flairConfigOutputError" class="error disabled"></p>
             <div class="bottomButtons">
                 <button type="button" name="generateConfig" id="generateConfig" class="primary">Generate</button>
