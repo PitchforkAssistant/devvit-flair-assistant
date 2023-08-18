@@ -282,6 +282,7 @@ a {
 
 button,
 a.button {
+    color: var(--color-secondary-onBackground);
     padding: 0.625rem 1.25rem;
     background: var(--color-secondary-background);
     height: 2.5rem;
@@ -306,6 +307,7 @@ a.button:active {
 
 
 button.danger {
+    color: var(--color-danger-onBackground);
     background: var(--color-danger-background);
 }
 
@@ -318,6 +320,7 @@ button.danger:active {
 }
 
 button.primary {
+    color: var(--color-primary-onBackground);
     background: var(--color-primary-background);
 }
 
