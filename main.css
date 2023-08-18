@@ -337,7 +337,7 @@ button.primary:active {
 }
 
 #header .bottomButtons a {
-    height: 1.5em;
+    height: auto;
     display: flex;
     flex-direction: row;
     align-items: center;
