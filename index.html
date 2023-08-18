@@ -197,13 +197,13 @@
                 <div id="flairConfigsContainer">
                     <fieldset id="baseConfig" class="flairConfig">
                         <div class="option">
-                            <label name="flairTemplateId">Post Flair Template ID</label>
+                            <label data-name="flairTemplateId">Post Flair Template ID</label>
                             <input type="text" name="flairTemplateId" placeholder="00000000-0000-0000-0000-000000000000"
                                 class="templateId" maxlength="36" minlength="36" required>
                         </div>
 
                         <div class="option">
-                            <label name="flairAction">Action</label>
+                            <label data-name="flairAction">Action</label>
                             <select name="flairAction">
                                 <option value="none">Do Nothing</option>
                                 <option value="approve">Approve</option>
@@ -213,7 +213,7 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairContributor">Contributor</label>
+                            <label data-name="flairContributor">Contributor</label>
                             <select name="flairContributor">
                                 <option value="none">Do Nothing</option>
                                 <option value="add">Add</option>
@@ -222,7 +222,7 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairLock">Lock Post</label>
+                            <label data-name="flairLock">Lock Post</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairLock">
                                 <span class="slider"></span>
@@ -230,7 +230,7 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairClear">Clear Post Flair</label>
+                            <label data-name="flairClear">Clear Post Flair</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairClear">
                                 <span class="slider"></span>
@@ -238,7 +238,7 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairIgnore">Ignore Post Reports</label>
+                            <label data-name="flairIgnore">Ignore Post Reports</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairIgnore">
                                 <span class="slider"></span>
@@ -246,39 +246,39 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairCommentToggle">Comment</label>
+                            <label data-name="flairCommentToggle">Comment</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairCommentToggle" data-toggles="flairCommentGroup">
                                 <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairCommentGroup" disabled>
-                                <label name="flairCommentDistinguish">Distinguish</label>
+                                <label data-name="flairCommentDistinguish">Distinguish</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentDistinguish"
                                         data-toggles="flairCommentSticky" checked>
                                     <span class="slider"></span>
                                 </label>
 
-                                <label name="flairCommentSticky">Sticky</label>
+                                <label data-name="flairCommentSticky">Sticky</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentSticky" checked>
                                     <span class="slider"></span>
                                 </label>
 
-                                <label name="flairCommentLock">Lock</label>
+                                <label data-name="flairCommentLock">Lock</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentLock">
                                     <span class="slider"></span>
                                 </label>
 
-                                <label name="flairCommentHeaderFooter">Add Header & Footer</label>
+                                <label data-name="flairCommentHeaderFooter">Add Header & Footer</label>
                                 <label class="switch">
                                     <input type="checkbox" name="flairCommentHeaderFooter" checked>
                                     <span class="slider"></span>
                                 </label>
 
 
-                                <label name="flairComment">Comment
+                                <label data-name="flairComment">Comment
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -293,26 +293,26 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairBanToggle">Ban</label>
+                            <label data-name="flairBanToggle">Ban</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairBanToggle" data-toggles="flairBanGroup">
                                 <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairBanGroup" disabled>
-                                <label name="flairBanPerma">Permanent</label>
+                                <label data-name="flairBanPerma">Permanent</label>
 
                                 <label class="switch">
                                     <input type="checkbox" name="flairBanPerma" data-toggles="flairBanDuration"
                                         data-invert-toggles="true" checked>
                                     <span class="slider"></span>
                                 </label>
-                                <label name="flairBanDuration" class="disabled">Duration</label>
+                                <label data-name="flairBanDuration" class="disabled">Duration</label>
                                 <input type="number" min="1" max="999" name="flairBanDuration" disabled class="disabled"
                                     required>
-                                <label name="flairBanReason">Reason</label>
+                                <label data-name="flairBanReason">Reason</label>
                                 <input type="text" name="flairBanReason" minlength="1" maxlength="100" required
                                     placeholder="R1">
-                                <label name="flairBanNote">Note
+                                <label data-name="flairBanNote">Note
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -323,7 +323,7 @@
                                 </label>
                                 <input type="text" name="flairBanNote" minlength="1" maxlength="300" required
                                     placeholder="{{permalink}}">
-                                <label name="flairBanMessage">Message
+                                <label data-name="flairBanMessage">Message
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -338,18 +338,18 @@
                         </div>
 
                         <div class="option">
-                            <label name="flairUserFlairToggle">Set User Flair</label>
+                            <label data-name="flairUserFlairToggle">Set User Flair</label>
                             <label class="switch">
                                 <input type="checkbox" name="flairUserFlairToggle" data-toggles="flairUserFlairGroup">
                                 <span class="slider"></span>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairUserFlairGroup" disabled>
-                                <label name="flairUserFlairTemplateId">User Flair Template ID</label>
+                                <label data-name="flairUserFlairTemplateId">User Flair Template ID</label>
                                 <input type="text" name="flairUserFlairTemplateId" class="templateId"
                                     placeholder="00000000-0000-0000-0000-000000000000">
-                                <label name="flairUserFlairCSSClass">CSS Class</label>
+                                <label data-name="flairUserFlairCSSClass">CSS Class</label>
                                 <input type="text" name="flairUserFlairCSSClass" placeholder="cssclass">
-                                <label name="flairUserFlairText">Flair Text
+                                <label data-name="flairUserFlairText">Flair Text
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
