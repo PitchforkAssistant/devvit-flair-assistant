@@ -46,7 +46,7 @@ body.noscroll {
     max-width: 50em;
 }
 
-br {    
+br {
     display: block;
     margin-top: 0.5em;
     content: "";
@@ -316,8 +316,6 @@ button.danger:hover {
 button.danger:active {
     background: var(--color-danger-background-selected);
 }
-
-
 
 button.primary {
     background: var(--color-primary-background);
