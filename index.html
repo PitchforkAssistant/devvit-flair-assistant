@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -8,7 +9,375 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
 </head>
-<body>
-    <div>Hi.</div>
+
+<body class="">
+    <div id="placeholderOverlay" class="disabled">
+        <div id="placeholderOverlayBox">
+            <h2>Placeholders</h2>
+            <p>
+                Placeholders are keywords surrounded by double curly brackets, they are case-sensitive. Placeholders are
+                replaced with their values when an action is performed.
+                <br>
+                The <code>{{mod}}</code> placeholder is populated first to prevent crafted inputs from revealing the
+                identity of the
+                moderator that triggered the action. The rest are populated in no particular order.
+                <br>
+                Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed).
+                <br>
+                Below is a list of all supported placeholders:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Placeholder</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>{{author}}</code></td>
+                        <td>Username of the author</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{subreddit}}</code></td>
+                        <td>Display name of the subreddit</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{body}}</code></td>
+                        <td>Post's body (<em>not recommended</em>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{title}}</code></td>
+                        <td>Title of the post</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{kind}}</code></td>
+                        <td>Type of the post, always "submission"</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{permalink}}</code></td>
+                        <td>Permalink to the post</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{url}}</code></td>
+                        <td>Alias for <code>{{permalink}}</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>{{link}}</code></td>
+                        <td>The URL that the post links to, <code>{{permalink}}</code> for text posts</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{domain}}</code></td>
+                        <td>The domain that the post links to, blank for text posts</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{id}}</code></td>
+                        <td>Post ID</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{author_id}}</code></td>
+                        <td>Author's User ID</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{subreddit_id}}</code></td>
+                        <td>Subreddit's ID</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{mod}}</code></td>
+                        <td>Username of the mod that set the flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{author_flair_text}}</code></td>
+                        <td>Text of the post author's user flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{author_flair_css_class}}</code></td>
+                        <td>CSS class of the post author's user flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{author_flair_template_id}}</code></td>
+                        <td>Template ID of the post author's user flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{link_flair_text}}</code></td>
+                        <td>Text of the post's flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{link_flair_css_class}}</code></td>
+                        <td>CSS class of the post's flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{link_flair_template_id}}</code></td>
+                        <td>Template ID of the post's flair</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{time_iso}}</code></td>
+                        <td>Current time in the ISO 8601 format</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{time_unix}}</code></td>
+                        <td>Current time as the unix epoch in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{time_custom}}</code></td>
+                        <td>Current time as defined by the <a target="_blank"
+                                href="https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_custom_date_placeholder_options"
+                                rel="nofollow">custom date placeholder options</a></td>
+                    </tr>
+                    <tr>
+                        <td><code>{{created_iso}}</code></td>
+                        <td>Post's creation time in the ISO 8601</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{created_unix}}</code></td>
+                        <td>Post's creation time as the unix epoch in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{created_custom}}</code></td>
+                        <td>Post's creation time as defined by the <a target="_blank"
+                                href="https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_custom_date_placeholder_options"
+                                rel="nofollow">custom date placeholder options</a></td>
+                    </tr>
+                    <tr>
+                        <td><code>{{actioned_iso}}</code></td>
+                        <td>When the flair was set in the ISO 8601 format</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{actioned_unix}}</code></td>
+                        <td>When the flair was set as the unix epoch in seconds</td>
+                    </tr>
+                    <tr>
+                        <td><code>{{actioned_custom}}</code></td>
+                        <td>When the flair was set as defined by the <a target="_blank"
+                                href="https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_custom_date_placeholder_options"
+                                rel="nofollow">custom date placeholder options</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div><button id="closePlaceholderOverlay" class="floatright">Close</button></div>
+        </div>
+    </div>
+    <div id="wrapper">
+        <div id="header">
+            <h1>Flair Assistant Config Tool</h1>
+            <p>This tool lets you to easily generate the flair configuration JSON used by the Flair Assistant app.</p>
+            <div class="bottomButtons">
+                <a class="button" target="_blank" href="https://developers.reddit.com/apps/flairassistant">
+                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
+                        icon-name="external-outline" fill="currentColor">
+                        <path
+                            d="M15.75 13H17v3.375A2.63 2.63 0 0114.375 19H3.625A2.63 2.63 0 011 16.375V5.625A2.629 2.629 0 013.625 3H7v1.25H3.625A1.377 1.377 0 002.25 5.625v10.75a1.377 1.377 0 001.375 1.375h10.75a1.377 1.377 0 001.375-1.375V13zm2.625-12h-5v1.25h3.491l-8.433 8.433.884.884 8.433-8.433v3.491H19v-5A.625.625 0 0018.375 1z">
+                        </path>
+                    </svg>
+                    App Page</a>
+                <a class="button" target="_blank"
+                    href="https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant">
+                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" height="16" width="16"
+                        icon-name="posts-outline" fill="currentColor">
+                        <path
+                            d="M15 9.25H8V8h7v1.25zM15 11H8v1.25h7V11zm0 3H8v1.25h7V14zm4 3.375V5.625A1.627 1.627 0 0017.375 4H5.625A1.627 1.627 0 004 5.625v11.75A1.627 1.627 0 005.625 19h11.75A1.627 1.627 0 0019 17.375zM17.375 5.25a.375.375 0 01.375.375v11.75a.375.375 0 01-.375.375H5.625a.375.375 0 01-.375-.375V5.625a.375.375 0 01.375-.375h11.75zm-14.75 9.5a.375.375 0 01-.375-.375V2.624a.375.375 0 01.375-.374h11.75a.375.375 0 01.375.374H16A1.627 1.627 0 0014.375 1H2.625A1.627 1.627 0 001 2.624v11.751A1.627 1.627 0 002.625 16v-1.25z">
+                        </path>
+                    </svg>
+                    Wiki Guide</a>
+                <a class="button" target="_blank" href="https://github.com/PitchforkAssistant/devvit-flair-assistant/">
+                    <svg rpl="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" height="16" width="16"
+                        icon-name="posts-outline" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z">
+                        </path>
+                    </svg>
+                    Github Repo</a>
+            </div>
+        </div>
+        <div id="left" class="panel">
+            <h2>Input</h2>
+            <form name="flairConfig" id="flairConfigForm" action="">
+                <div id="flairConfigsContainer">
+                    <fieldset id="baseConfig" class="flairConfig">
+                        <div class="option">
+                            <label for="flairTemplateId">Post Flair Template ID</label>
+                            <input type="text" name="flairTemplateId" placeholder="00000000-0000-0000-0000-000000000000"
+                                class="templateId" maxlength="36" minlength="36" required>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairAction">Action</label>
+                            <select name="flairAction">
+                                <option value="none">Do Nothing</option>
+                                <option value="approve">Approve</option>
+                                <option value="remove">Remove</option>
+                                <option value="spam">Spam</option>
+                            </select>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairContributor">Contributor</label>
+                            <select name="flairContributor">
+                                <option value="none">Do Nothing</option>
+                                <option value="add">Add</option>
+                                <option value="remove">Remove</option>
+                            </select>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairLock">Lock Post</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairLock">
+                                <span class="slider">
+                            </label>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairClear">Clear Post Flair</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairClear">
+                                <span class="slider">
+                            </label>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairIgnore">Ignore Post Reports</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairIgnore">
+                                <span class="slider">
+                            </label>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairCommentToggle">Comment</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairCommentToggle" data-toggles="flairCommentGroup">
+                                <span class="slider">
+                            </label>
+                            <fieldset class="optionGroup disabled" name="flairCommentGroup" disabled>
+                                <label for="flairCommentDistinguish">Distinguish</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="flairCommentDistinguish"
+                                        data-toggles="flairCommentSticky" checked>
+                                    <span class="slider">
+                                </label>
+
+                                <label for="flairCommentSticky">Sticky</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="flairCommentSticky" checked>
+                                    <span class="slider">
+                                </label>
+
+                                <label for="flairCommentLock">Lock</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="flairCommentLock">
+                                    <span class="slider">
+                                </label>
+
+                                <label for="flairCommentHeaderFooter">Add Header & Footer</label>
+                                <label class="switch">
+                                    <input type="checkbox" name="flairCommentHeaderFooter" checked>
+                                    <span class="slider">
+                                </label>
+
+
+                                <label for="flairComment">Comment
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <textarea name="flairComment" rows="4" cols="70" minlength="1" required
+                                    placeholder="Your post violated a subreddit rule."></textarea>
+                            </fieldset>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairBanToggle">Ban</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairBanToggle" data-toggles="flairBanGroup">
+                                <span class="slider">
+                            </label>
+                            <fieldset class="optionGroup disabled" name="flairBanGroup" disabled>
+                                <label for="flairBanPerma">Permanent</label>
+
+                                <label class="switch">
+                                    <input type="checkbox" name="flairBanPerma" data-toggles="flairBanDuration"
+                                        data-invert-toggles="true" checked>
+                                    <span class="slider">
+                                </label>
+                                <label for="flairBanDuration" disabled class="disabled">Duration</label>
+                                <input type="number" min="1" max="999" name="flairBanDuration" class="disabled"
+                                    required>
+                                <label for="flairBanReason">Reason</label>
+                                <input type="text" name="flairBanReason" minlength="1" maxlength="100" required
+                                    placeholder="R1">
+                                <label for="flairBanNote">Note
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <input type="text" name="flairBanNote" minlength="1" maxlength="300" required
+                                    placeholder="{{permalink}}">
+                                <label for="flairBanMessage">Message
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <textarea name="flairBanMessage" minlength="1" required rows="4" cols="70"
+                                    placeholder="You were banned you violated rule 1!"></textarea>
+                            </fieldset>
+                        </div>
+
+                        <div class="option">
+                            <label for="flairUserFlairToggle">Set User Flair</label>
+                            <label class="switch">
+                                <input type="checkbox" name="flairUserFlairToggle" data-toggles="flairUserFlairGroup">
+                                <span class="slider">
+                            </label>
+                            <fieldset class="optionGroup disabled" name="flairUserFlairGroup" disabled>
+                                <label for="flairUserFlairTemplateId">User Flair Template ID</label>
+                                <input type="text" name="flairUserFlairTemplateId" class="templateId"
+                                    placeholder="00000000-0000-0000-0000-000000000000">
+                                <label for="flairUserFlairCSSClass">CSS Class</label>
+                                <input type="text" name="flairUserFlairCSSClass" placeholder="cssclass">
+                                <label for="flairUserFlairText">Flair Text
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" stroke="#currentColor" fill="none"
+                                        stroke-linecap="round" stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                </label>
+                                <input type="text" name="flairUserFlairText" placeholder="Visible Text">
+                            </fieldset>
+                        </div>
+                        <button type="button" name="delete" class="delete danger">Delete</button>
+                    </fieldset>
+                </div>
+                <div class="bottomButtons">
+                    <button type="button" name="addAnother" id="addAnother">Add</button>
+                    <button type="button" name="resetAll" id="resetAll" class="danger floatright">Reset</button>
+                </div>
+            </form>
+        </div>
+        <div id="right" class="panel">
+            <h2>Output</h2>
+            <textarea type="text" id="flairConfigOutput" rows="30" cols="70" readonly>[]</textarea>
+            <p id="flairConfigOutputError" class="error disabled"></p>
+            <div class="bottomButtons">
+                <button type="button" name="generateConfig" id="generateConfig" class="primary">Generate</button>
+                <button type="button" name="copy" id="copy" class="floatright">Copy</button>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>
