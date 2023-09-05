@@ -72,7 +72,7 @@ Devvit.addTrigger({
             return;
         }
         if (event.targetPost?.linkFlair?.templateId) {
-            await handleFlairUpdate(context, event);
+            await handleFlairUpdate(event, context);
         }
     },
 });
