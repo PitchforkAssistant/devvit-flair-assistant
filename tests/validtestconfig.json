@@ -104,5 +104,13 @@
         },
         "ignoreReports": true,
         "lock": true
+    },
+    {
+        "templateId": "4f5b3268-51e2-11ee-b5c0-364dc09a741e",
+        "contributor": "add"
+    },
+    {
+        "templateId": "522ae29a-51e2-11ee-b69a-e292f6735c3f",
+        "contributor": "remove"
     }
 ]

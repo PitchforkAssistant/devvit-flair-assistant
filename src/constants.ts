@@ -31,15 +31,10 @@ export const DEFAULTS = {
 // Links
 export const LINKS = {
     SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/gp4q1VrH",
-    TIMEFORMAT: "https://date-fns.org/v2.30.0/docs/format",
 };
 
 // Errors
 export const ERRORS = {
     INVALID_JSON: "Failed to parse JSON, the syntax is likely invalid.",
     INVALID_SCHEMA: `Failed to validate against config schema, try it at: ${LINKS.SCHEMA_VALIDATOR}`,
-    INVALID_ACTION_DEBOUNCE: "Action debounce must be a positive number.",
-    INVALID_TIMEFORMAT: `Invalid timeformat, see: ${LINKS.TIMEFORMAT}`,
-    INVALID_TIMEZONE: "That is not a valid UTC offset or TZ identifier.",
-    INVALID_LOCALE: "That is not a valid locale.",
 };

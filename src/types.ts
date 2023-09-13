@@ -31,4 +31,4 @@ export interface FlairEntry {
     clearPostFlair?: boolean;
 }
 
-export type FlairEntries = Array<FlairEntry>;
+export type FlairEntries = FlairEntry[];

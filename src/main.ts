@@ -1,7 +1,8 @@
 import {Devvit} from "@devvit/public-api";
 import {handleFlairUpdate} from "./handlers/events.js";
-import {validateActionDebounce, validateCustomLocale, validateCustomDateTemplate, validateCustomTimezone, validateFlairConfig} from "./handlers/validators.js";
+import {validateFlairConfig} from "./handlers/validators.js";
 import {LABELS, HELP_TEXT, DEFAULTS} from "./constants.js";
+import {validateCustomDateformat, validateCustomLocale, validateCustomTimezone, validatePositiveNumber} from "devvit-helpers";
 
 Devvit.configure({
     redditAPI: true,
@@ -33,7 +34,7 @@ Devvit.addSettings([
         name: "actionDebounce",
         defaultValue: DEFAULTS.ACTION_DEBOUNCE,
         label: LABELS.ACTION_DEBOUNCE,
-        onValidate: validateActionDebounce,
+        onValidate: validatePositiveNumber,
     },
     {
         type: "group",
@@ -45,7 +46,7 @@ Devvit.addSettings([
                 name: "customDateTemplate",
                 defaultValue: DEFAULTS.CUSTOM_DATE_TEMPLATE,
                 label: LABELS.CUSTOM_DATE_TEMPLATE,
-                onValidate: validateCustomDateTemplate,
+                onValidate: validateCustomDateformat,
             },
             {
                 type: "string",
