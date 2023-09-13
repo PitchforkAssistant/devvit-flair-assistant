@@ -30,6 +30,7 @@ export async function handleFlairUpdate (event: OnTriggerEvent<ModAction>, conte
     const subreddit = event.subreddit.name;
     const author = event.targetUser.name;
     const authorId = event.targetUser.id;
+    const moderatorName = event.moderator.name;
 
     // The config is based on flair template IDs, so check that the post has one.
     const templateId = event.targetPost.linkFlair?.templateId ?? "";
@@ -67,9 +68,6 @@ export async function handleFlairUpdate (event: OnTriggerEvent<ModAction>, conte
         timezone: allSettings.customTimezone?.toString() ?? "",
         locale: getLocaleFromString(allSettings.customLocale?.toString() ?? "") ?? enUS,
     };
-
-    // getModerationLog now takes an array of usernames or undefined, so we need to convert the moderator name to an array or undefined.
-    const moderatorName = event.moderator.name ? [event.moderator.name] : undefined;
 
     // Convert the mod action to a list of placeholders. We know targetPost exists because we checked for it at the beginning.
     const placeholders = await getRecommendedPlaceholdersFromModAction(event as ModAction & {targetPost: PostV2}, customDateformat);
