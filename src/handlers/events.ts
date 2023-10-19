@@ -157,8 +157,8 @@ export async function handleFlairUpdate (event: OnTriggerEvent<ModAction>, conte
                 },
                 placeholders
             );
-            const comment = await submitPostReply(context.reddit, postId, commentText, flairConfig.comment.distinguish, flairConfig.comment.sticky, flairConfig.comment.lock);
-            console.log(`Commented on post ${postId} with comment ${comment.id}`);
+            const comment = await submitPostReply(context.reddit, postId, commentText, flairConfig.comment.distinguish, flairConfig.comment.sticky, flairConfig.comment.lock).catch(e => console.error(`Failed to submit comment on post ${postId}`, e));
+            console.log(`Commented on post ${postId} with comment ${comment?.id}`);
         } else {
             console.log(`Skipped comment on post ${postId} because it got a sticky/distinguish action in the past ${actionDebounce} seconds.`);
         }
