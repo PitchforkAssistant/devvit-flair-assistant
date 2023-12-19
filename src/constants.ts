@@ -17,7 +17,6 @@ export const HELP_TEXT = {
 };
 
 // Default values
-
 export const DEFAULTS = {
     HEADER_TEMPLATE: "Hi {{author}}! Thanks for posting to /r/{{subreddit}}. Unfortunately, [your {{kind}}]({{permalink}}) was removed for the following reason:",
     FOOTER_TEMPLATE: "If you have questions about this, please [contact our mods via moderator mail](https://www.reddit.com/message/compose?to={{subreddit}}) rather than replying here. Thank you!",
@@ -25,7 +24,7 @@ export const DEFAULTS = {
     ACTION_DEBOUNCE: 10,
     CUSTOM_DATE_TEMPLATE: "yyyy-MM-dd hh-mm-ss",
     CUSTOM_TIMEZONE: "UTC",
-    CUSTOM_LOCALE: "enUS",
+    CUSTOM_LOCALE: ["enUS"],
 };
 
 // Links

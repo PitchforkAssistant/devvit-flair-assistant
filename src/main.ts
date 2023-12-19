@@ -2,7 +2,7 @@ import {Devvit} from "@devvit/public-api";
 import {handleFlairUpdate} from "./handlers/events.js";
 import {validateFlairConfig} from "./handlers/validators.js";
 import {LABELS, HELP_TEXT, DEFAULTS} from "./constants.js";
-import {validateCustomDateformat, validateCustomLocale, validateCustomTimezone, validatePositiveNumber} from "devvit-helpers";
+import {LOCALE_OPTIONS, validateCustomDateformat, validateCustomLocale, validateCustomTimezone, validatePositiveNumber} from "devvit-helpers";
 
 Devvit.configure({
     redditAPI: true,
@@ -56,10 +56,12 @@ Devvit.addSettings([
                 onValidate: validateCustomTimezone,
             },
             {
-                type: "string",
+                type: "select",
                 name: "customLocale",
                 defaultValue: DEFAULTS.CUSTOM_LOCALE,
                 label: LABELS.CUSTOM_LOCALE,
+                options: LOCALE_OPTIONS,
+                multiSelect: false,
                 onValidate: validateCustomLocale,
             },
         ],
