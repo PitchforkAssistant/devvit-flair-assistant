@@ -7,7 +7,7 @@ export const LABELS = {
     CUSTOM_DATE_GROUP: "Options for custom date placeholders",
     CUSTOM_DATE_TEMPLATE: "Date format template (e.g. yyyy-MM-dd hh-mm-ss)",
     CUSTOM_TIMEZONE: "Timezone offset or identifier (e.g. UTC, +02:00, America/New_York, etc)",
-    CUSTOM_LOCALE: "Locale (e.g enUS, de, etc)",
+    CUSTOM_LOCALE: "Locale",
 };
 
 // Help labels
