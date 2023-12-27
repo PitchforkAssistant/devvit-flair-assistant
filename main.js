@@ -37,6 +37,9 @@ function addAnother() {
                     if (el.parentElement.tagName == "LABEL") {
                         el.parentElement.classList.toggle("disabled", !show);
                     }
+                    if (el.parentElement.parentElement.tagName == "LABEL") {
+                        el.parentElement.parentElement.classList.toggle("disabled", !show);
+                    }
                 });
                 clone.querySelectorAll(`[data-name=${toggle}]`).forEach(function (el) {
                     el.classList.toggle("disabled", !show);
