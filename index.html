@@ -197,88 +197,99 @@
                 <div id="flairConfigsContainer">
                     <fieldset id="baseConfig" class="flairConfig">
                         <div class="option">
-                            <label data-name="flairTemplateId">Post Flair Template ID</label>
-                            <input type="text" name="flairTemplateId" placeholder="00000000-0000-0000-0000-000000000000"
-                                class="templateId" maxlength="36" minlength="36" required>
-                        </div>
-
-                        <div class="option">
-                            <label data-name="flairAction">Action</label>
-                            <select name="flairAction">
-                                <option value="none">Do Nothing</option>
-                                <option value="approve">Approve</option>
-                                <option value="remove">Remove</option>
-                                <option value="spam">Spam</option>
-                            </select>
-                        </div>
-
-                        <div class="option">
-                            <label data-name="flairContributor">Contributor</label>
-                            <select name="flairContributor">
-                                <option value="none">Do Nothing</option>
-                                <option value="add">Add</option>
-                                <option value="remove">Remove</option>
-                            </select>
-                        </div>
-
-                        <div class="option">
-                            <label data-name="flairLock">Lock Post</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairLock">
-                                <span class="slider"></span>
+                            <label data-name="flairTemplateId">
+                                Post Flair Template ID
+                                <input type="text" name="flairTemplateId"
+                                    placeholder="00000000-0000-0000-0000-000000000000" class="templateId" maxlength="36"
+                                    minlength="36" required>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label data-name="flairClear">Clear Post Flair</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairClear">
-                                <span class="slider"></span>
+                            <label data-name="flairAction">
+                                Action
+                                <select name="flairAction">
+                                    <option value="none">Do Nothing</option>
+                                    <option value="approve">Approve</option>
+                                    <option value="remove">Remove</option>
+                                    <option value="spam">Spam</option>
+                                </select>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label data-name="flairIgnore">Ignore Post Reports</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairIgnore">
-                                <span class="slider"></span>
+                            <label data-name="flairContributor">
+                                Contributor
+                                <select name="flairContributor">
+                                    <option value="none">Do Nothing</option>
+                                    <option value="add">Add</option>
+                                    <option value="remove">Remove</option>
+                                </select>
                             </label>
                         </div>
 
                         <div class="option">
-                            <label data-name="flairCommentToggle">Comment</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairCommentToggle" data-toggles="flairCommentGroup">
-                                <span class="slider"></span>
+                            <label data-name="flairLock">
+                                Lock Post
+                                <label class="switch">
+                                    <input type="checkbox" name="flairLock">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                        </div>
+
+                        <div class="option">
+                            <label data-name="flairIgnore">
+                                Ignore Post Reports
+                                <label class="switch">
+                                    <input type="checkbox" name="flairIgnore">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                        </div>
+
+                        <div class="option">
+                            <label data-name="flairCommentToggle">
+                                Comment
+                                <label class="switch">
+                                    <input type="checkbox" name="flairCommentToggle" data-toggles="flairCommentGroup">
+                                    <span class="slider"></span>
+                                </label>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairCommentGroup" disabled>
-                                <label data-name="flairCommentDistinguish">Distinguish</label>
-                                <label class="switch">
-                                    <input type="checkbox" name="flairCommentDistinguish"
-                                        data-toggles="flairCommentSticky" checked>
-                                    <span class="slider"></span>
+                                <label data-name="flairCommentDistinguish">
+                                    Distinguish
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairCommentDistinguish"
+                                            data-toggles="flairCommentSticky" checked>
+                                        <span class="slider"></span>
+                                    </label>
                                 </label>
 
-                                <label data-name="flairCommentSticky">Sticky</label>
-                                <label class="switch">
-                                    <input type="checkbox" name="flairCommentSticky" checked>
-                                    <span class="slider"></span>
+                                <label data-name="flairCommentSticky">
+                                    Sticky
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairCommentSticky" checked>
+                                        <span class="slider"></span>
+                                    </label>
+                                </label>
+                                <label data-name="flairCommentLock">
+                                    Lock
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairCommentLock">
+                                        <span class="slider"></span>
+                                    </label>
+                                </label>
+                                <label data-name="flairCommentHeaderFooter">
+                                    Add Header & Footer
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairCommentHeaderFooter" checked>
+                                        <span class="slider"></span>
+                                    </label>
                                 </label>
 
-                                <label data-name="flairCommentLock">Lock</label>
-                                <label class="switch">
-                                    <input type="checkbox" name="flairCommentLock">
-                                    <span class="slider"></span>
-                                </label>
-
-                                <label data-name="flairCommentHeaderFooter">Add Header & Footer</label>
-                                <label class="switch">
-                                    <input type="checkbox" name="flairCommentHeaderFooter" checked>
-                                    <span class="slider"></span>
-                                </label>
-
-
-                                <label data-name="flairComment">Comment
+                                <label data-name="flairComment">
+                                    Comment
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -286,33 +297,42 @@
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
                                     </svg>
+
+                                    <textarea name="flairComment" rows="4" minlength="1" required
+                                        placeholder="Your post violated a subreddit rule."></textarea>
                                 </label>
-                                <textarea name="flairComment" rows="4" minlength="1" required
-                                    placeholder="Your post violated a subreddit rule."></textarea>
                             </fieldset>
                         </div>
 
                         <div class="option">
-                            <label data-name="flairBanToggle">Ban</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairBanToggle" data-toggles="flairBanGroup">
-                                <span class="slider"></span>
+                            <label data-name="flairBanToggle">
+                                Ban
+                                <label class="switch">
+                                    <input type="checkbox" name="flairBanToggle" data-toggles="flairBanGroup">
+                                    <span class="slider"></span>
+                                </label>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairBanGroup" disabled>
-                                <label data-name="flairBanPerma">Permanent</label>
-
-                                <label class="switch">
-                                    <input type="checkbox" name="flairBanPerma" data-toggles="flairBanDuration"
-                                        data-invert-toggles="true" checked>
-                                    <span class="slider"></span>
+                                <label data-name="flairBanPerma">
+                                    Permanent
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairBanPerma" data-toggles="flairBanDuration"
+                                            data-invert-toggles="true" checked>
+                                        <span class="slider"></span>
+                                    </label>
                                 </label>
-                                <label data-name="flairBanDuration" class="disabled">Duration</label>
-                                <input type="number" min="1" max="999" name="flairBanDuration" disabled class="disabled"
-                                    required>
-                                <label data-name="flairBanReason">Reason</label>
-                                <input type="text" name="flairBanReason" minlength="1" maxlength="100" required
-                                    placeholder="R1">
-                                <label data-name="flairBanNote">Note
+                                <label data-name="flairBanDuration" class="disabled">
+                                    Duration
+                                    <input type="number" min="1" max="999" name="flairBanDuration" disabled
+                                        class="disabled" required>
+                                </label>
+                                <label data-name="flairBanReason">
+                                    Reason
+                                    <input type="text" name="flairBanReason" minlength="1" maxlength="100" required
+                                        placeholder="R1">
+                                </label>
+                                <label data-name="flairBanNote">
+                                    Note
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -320,10 +340,11 @@
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
                                     </svg>
+                                    <input type="text" name="flairBanNote" minlength="1" maxlength="300" required
+                                        placeholder="{{permalink}}">
                                 </label>
-                                <input type="text" name="flairBanNote" minlength="1" maxlength="300" required
-                                    placeholder="{{permalink}}">
-                                <label data-name="flairBanMessage">Message
+                                <label data-name="flairBanMessage">
+                                    Message
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
                                         stroke-linejoin="round" class="supportsPlaceholders">
@@ -331,24 +352,62 @@
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
                                     </svg>
+                                    <textarea name="flairBanMessage" minlength="1" required rows="4"
+                                        placeholder="You were banned you violated rule 1!"></textarea>
                                 </label>
-                                <textarea name="flairBanMessage" minlength="1" required rows="4"
-                                    placeholder="You were banned you violated rule 1!"></textarea>
                             </fieldset>
                         </div>
 
                         <div class="option">
-                            <label data-name="flairUserFlairToggle">Set User Flair</label>
-                            <label class="switch">
-                                <input type="checkbox" name="flairUserFlairToggle" data-toggles="flairUserFlairGroup">
-                                <span class="slider"></span>
+                            <label data-name="flairPostFlairToggle">
+                                Edit Post Flair
+                                <label class="switch">
+                                    <input type="checkbox" name="flairPostFlairToggle"
+                                        data-toggles="flairPostFlairGroup">
+                                    <span class="slider"></span>
+                                </label>
+                            </label>
+                            <fieldset class="optionGroup disabled" name="flairPostFlairGroup" disabled>
+                                <label data-name="flairPostClear">
+                                    Clear Post Flair
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairPostClear"
+                                            data-toggles="flairPostFlairTemplateId,flairPostFlairCSSClass,flairPostFlairText"
+                                            data-invert-toggles="true">
+                                        <span class="slider"></span>
+                                    </label>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="option">
+                            <label data-name="flairUserFlairToggle">
+                                Edit User Flair
+                                <label class="switch">
+                                    <input type="checkbox" name="flairUserFlairToggle"
+                                        data-toggles="flairUserFlairGroup">
+                                    <span class="slider"></span>
+                                </label>
                             </label>
                             <fieldset class="optionGroup disabled" name="flairUserFlairGroup" disabled>
-                                <label data-name="flairUserFlairTemplateId">User Flair Template ID</label>
-                                <input type="text" name="flairUserFlairTemplateId" class="templateId"
-                                    placeholder="00000000-0000-0000-0000-000000000000">
-                                <label data-name="flairUserFlairCSSClass">CSS Class</label>
-                                <input type="text" name="flairUserFlairCSSClass" placeholder="cssclass">
+                                <label data-name="flairUserClear">
+                                    Clear User Flair
+                                    <label class="switch">
+                                        <input type="checkbox" name="flairUserClear"
+                                            data-toggles="flairUserFlairTemplateId,flairUserFlairCSSClass,flairUserFlairText"
+                                            data-invert-toggles="true">
+                                        <span class="slider"></span>
+                                    </label>
+                                </label>
+                                <label data-name="flairUserFlairTemplateId">
+                                    User Flair Template ID
+                                    <input type="text" name="flairUserFlairTemplateId" class="templateId"
+                                        placeholder="00000000-0000-0000-0000-000000000000">
+                                </label>
+                                <label data-name="flairUserFlairCSSClass">
+                                    CSS Class
+                                    <input type="text" name="flairUserFlairCSSClass" placeholder="cssclass">
+                                </label>
                                 <label data-name="flairUserFlairText">Flair Text
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
                                         stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
@@ -357,8 +416,8 @@
                                         <path d="M12 9h.01" />
                                         <path d="M11 12h1v4h1" />
                                     </svg>
+                                    <input type="text" name="flairUserFlairText" placeholder="Visible Text">
                                 </label>
-                                <input type="text" name="flairUserFlairText" placeholder="Visible Text">
                             </fieldset>
                         </div>
                         <button type="button" name="delete" class="delete danger">Delete</button>

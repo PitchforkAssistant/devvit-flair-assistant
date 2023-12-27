@@ -131,6 +131,10 @@ option {
     display: block;
 }
 
+label>input,
+label>select {
+    margin-top: 0.5rem;
+}
 
 input:focus {
     outline: none;
@@ -364,7 +368,7 @@ a.button:hover {
 
 .switch {
     position: relative;
-    display: inline-block;
+    display: block;
     width: 3rem;
     height: 2rem;
 }

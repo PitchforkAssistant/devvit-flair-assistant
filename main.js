@@ -29,15 +29,18 @@ function addAnother() {
         changedElement.addEventListener("change", function () {
             console.log("changed");
             let show = changedElement.dataset.invertToggles ? !changedElement.checked : changedElement.checked;
-            changedElement.parentElement.parentElement.querySelectorAll(`[name=${changedElement.dataset.toggles}]`).forEach(function (el) {
-                el.disabled = !show;
-                el.classList.toggle("disabled", !show);
-                if (el.parentElement.tagName == "LABEL") {
-                    el.parentElement.classList.toggle("disabled", !show);
-                }
-            });
-            changedElement.parentElement.parentElement.querySelectorAll(`[data-name=${changedElement.dataset.toggles}]`).forEach(function (el) {
-                el.classList.toggle("disabled", !show);
+            const toggles = changedElement.dataset.toggles.split(",");
+            toggles.forEach(function (toggle) {
+                clone.querySelectorAll(`[name=${toggle}]`).forEach(function (el) {
+                    el.disabled = !show;
+                    el.classList.toggle("disabled", !show);
+                    if (el.parentElement.tagName == "LABEL") {
+                        el.parentElement.classList.toggle("disabled", !show);
+                    }
+                });
+                clone.querySelectorAll(`[data-name=${toggle}]`).forEach(function (el) {
+                    el.classList.toggle("disabled", !show);
+                });
             });
         });
     });
@@ -96,12 +99,6 @@ function generateConfig() {
         if (changeContributor != "none") {
             config["contributor"] = changeContributor;
         }
-
-        const clearFlair = configElement.querySelector("[name=flairClear]").checked;
-        if (clearFlair) {
-            config["clearPostFlair"] = true;
-        }
-
         const lockPost = configElement.querySelector("[name=flairLock]").checked;
         if (lockPost) {
             config["lock"] = true;
@@ -189,13 +186,29 @@ function generateConfig() {
             config["comment"] = comment;
         }
 
+        const flairPostFlairToggle = configElement.querySelector("[name=flairPostFlairToggle]").checked;
+        if (flairPostFlairToggle) {
+            const clearPostFlair = configElement.querySelector("[name=flairPostClear]").checked;
+            if (clearPostFlair) {
+                config["clearPostFlair"] = true;
+            }
+        }
+
+
         const flairUserFlairToggle = configElement.querySelector("[name=flairUserFlairToggle]").checked;
         if (flairUserFlairToggle) {
+            const clearUserFlair = configElement.querySelector("[name=flairUserClear]").checked;
             const userFlair = {};
 
-            userFlair["text"] = configElement.querySelector("[name=flairUserFlairText]").value;
-            userFlair["cssClass"] = configElement.querySelector("[name=flairUserFlairCSSClass]").value;
-            userFlair["templateId"] = configElement.querySelector("[name=flairUserFlairTemplateId]").value;
+            if (clearUserFlair) {
+                userFlair["text"] = "";
+                userFlair["cssClass"] = "";
+                userFlair["templateId"] = "";
+            } else {
+                userFlair["text"] = configElement.querySelector("[name=flairUserFlairText]").value;
+                userFlair["cssClass"] = configElement.querySelector("[name=flairUserFlairCSSClass]").value;
+                userFlair["templateId"] = configElement.querySelector("[name=flairUserFlairTemplateId]").value;
+            }
 
             config["userFlair"] = userFlair;
         }
