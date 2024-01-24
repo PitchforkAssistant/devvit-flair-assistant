@@ -143,6 +143,26 @@ export async function handleFlairUpdate (event: OnTriggerEvent<ModAction>, conte
         }
     }
 
+    // Handle ignoreReports
+    if (flairConfig.ignoreReports) {
+        if (!await hasPerformedAction(context.reddit, subreddit, postId, "ignorereports", moderatorName, false, actionDebounce)) {
+            console.log(`Ignoring reports on post ${postId}`);
+            await ignoreReportsByPostId(context.reddit, postId, false).catch(e => console.error(`Failed to fetch post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
+        } else {
+            console.log(`Skipped ignore reports on post ${postId} because it got an ignore reports action in the past ${actionDebounce} seconds.`);
+        }
+    }
+
+    // Handle locking the post
+    if (flairConfig.lock) {
+        if (!await hasPerformedAction(context.reddit, subreddit, postId, "lock", moderatorName, false, actionDebounce)) {
+            console.log(`Locking post ${postId}`);
+            await setLockByPostId(context.reddit, postId, true).catch(e => console.error(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`, e));
+        } else {
+            console.log(`Skipped lock on post ${postId} because it got a lock action in the past ${actionDebounce} seconds.`);
+        }
+    }
+
     // Handle leaving a comment
     if (flairConfig.comment) {
         // Avoids duplicating removal reasons if the post already got a sticky/distinguish action, like when Toolbox is used.
@@ -161,26 +181,6 @@ export async function handleFlairUpdate (event: OnTriggerEvent<ModAction>, conte
             console.log(`Commented on post ${postId} with comment ${comment?.id}`);
         } else {
             console.log(`Skipped comment on post ${postId} because it got a sticky/distinguish action in the past ${actionDebounce} seconds.`);
-        }
-    }
-
-    // Handle ignoreReports
-    if (flairConfig.ignoreReports) {
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, "ignorereports", moderatorName, false, actionDebounce)) {
-            console.log(`Ignoring reports on post ${postId}`);
-            await ignoreReportsByPostId(context.reddit, postId, false).catch(e => console.error(`Failed to fetch post ${postId} in redditHelpers.ignoreReportsByPostId`, e));
-        } else {
-            console.log(`Skipped ignore reports on post ${postId} because it got an ignore reports action in the past ${actionDebounce} seconds.`);
-        }
-    }
-
-    // Handle locking the post
-    if (flairConfig.lock) {
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, "lock", moderatorName, false, actionDebounce)) {
-            console.log(`Locking post ${postId}`);
-            await setLockByPostId(context.reddit, postId, true).catch(e => console.error(`Failed to fetch post ${postId} in redditHelpers.lockByPostId`, e));
-        } else {
-            console.log(`Skipped lock on post ${postId} because it got a lock action in the past ${actionDebounce} seconds.`);
         }
     }
 }
