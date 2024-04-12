@@ -194,26 +194,28 @@ function generateConfig() {
             const clearPostFlair = configElement.querySelector("[name=flairPostClear]").checked;
             if (clearPostFlair) {
                 config["clearPostFlair"] = true;
+            } else {
+                const postFlair = {};
+                postFlair["text"] = configElement.querySelector("[name=flairPostFlairText]").value;
+                postFlair["cssClass"] = configElement.querySelector("[name=flairPostFlairCSSClass]").value;
+                postFlair["templateId"] = configElement.querySelector("[name=flairPostFlairTemplateId]").value;
+                config["postFlair"] = postFlair;
             }
         }
-
 
         const flairUserFlairToggle = configElement.querySelector("[name=flairUserFlairToggle]").checked;
         if (flairUserFlairToggle) {
             const clearUserFlair = configElement.querySelector("[name=flairUserClear]").checked;
-            const userFlair = {};
 
             if (clearUserFlair) {
-                userFlair["text"] = "";
-                userFlair["cssClass"] = "";
-                userFlair["templateId"] = "";
+                config["clearUserFlair"] = true;
             } else {
+                const userFlair = {};
                 userFlair["text"] = configElement.querySelector("[name=flairUserFlairText]").value;
                 userFlair["cssClass"] = configElement.querySelector("[name=flairUserFlairCSSClass]").value;
                 userFlair["templateId"] = configElement.querySelector("[name=flairUserFlairTemplateId]").value;
+                config["userFlair"] = userFlair;
             }
-
-            config["userFlair"] = userFlair;
         }
 
         // only add if there's at least two keys
@@ -229,7 +231,7 @@ function generateConfig() {
     if (errors.length) {
         errorsElement.classList.remove("disabled");
         configOutputElement.classList.add("invalid");
-        errorsElement.innerHTML = "Some errors occured, the generated config may not be complete!<br>" + errors.join("<br>");
+        errorsElement.innerHTML = "Some errors occured, the generated config may not be complete or valid!<br>" + errors.join("<br>");
         return;
     } else {
         errorsElement.classList.add("disabled");

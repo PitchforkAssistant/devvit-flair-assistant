@@ -24,7 +24,7 @@
                 identity of the
                 moderator that triggered the action. The rest are populated in no particular order.
                 <br>
-                Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed).
+                Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). Placeholder values are based on the values of the post at the time the flair was set, meaning they will not reflect any changes made to the post (such as editing flairs) by the bot.
                 <br>
                 Below is a list of all supported placeholders:
             </p>
@@ -377,6 +377,27 @@
                                         <span class="slider"></span>
                                     </span>
                                 </label>
+
+                                <label data-name="flairPostFlairTemplateId">
+                                    Post Flair Template ID
+                                    <input type="text" name="flairPostFlairTemplateId" class="templateId"
+                                        placeholder="00000000-0000-0000-0000-000000000000">
+                                </label>
+                                <label data-name="flairPostFlairCSSClass">
+                                    CSS Class
+                                    <input type="text" name="flairPostFlairCSSClass" placeholder="cssclass">
+                                </label>
+                                <label data-name="flairPostFlairText">Flair Text
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                    <input type="text" name="flairPostFlairText" placeholder="Visible Text">
+                                </label>
+
                             </fieldset>
                         </div>
 
