@@ -10,7 +10,7 @@ Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
 Flair Assistant Config Tool: https://pitchforkassistant.github.io/devvit-flair-assistant/
 
-Schema Validator/Example: https://www.jsonschemavalidator.net/s/gp4q1VrH
+Schema Validator/Example: https://www.jsonschemavalidator.net/s/VEEIzHlp
 
 
 # Configuration
@@ -44,7 +44,7 @@ The app skips certain actions if the moderator that set the post's flair already
 
 This field accepts the configuration for each flair using a specific JSON structure. You can generate it using the [Flair Assistant Config Tool](https://pitchforkassistant.github.io/devvit-flair-assistant/).
 
-If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/gp4q1VrH). 
+If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/VEEIzHlp). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 
