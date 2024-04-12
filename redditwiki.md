@@ -119,20 +119,6 @@ This is an optional field that defines whether the post's reports should be set 
 &nbsp;
 
 
-#### `clearPostFlair`
-
-| Key      | `clearPostFlair` |
-| :------- | :--------------- |
-| Value    | boolean          |
-| Optional | Yes              |
-
-This is an optional field that defines whether the post flair that triggered the action should be cleared. Omitting it is the same as setting it to false.
-
----
-
-&nbsp;
-
-
 #### `contributor`
 
 | Key      | `contributor`         |
@@ -147,6 +133,38 @@ This is an optional field that defines whether the post author should be added o
 &nbsp;
 
 
+#### `clearUserFlair`
+
+| Key      | `clearPostFlair` |
+| :------- | :--------------- |
+| Value    | boolean          |
+| Optional | Yes              |
+
+This is an optional field that defines whether the user flair of the post's author should be cleared. Omitting it is the same as setting it to false.
+
+If you also specify the `userFlair` field, this flag will be ignored.
+
+---
+
+&nbsp;
+
+
+#### `clearPostFlair`
+
+| Key      | `clearPostFlair` |
+| :------- | :--------------- |
+| Value    | boolean          |
+| Optional | Yes              |
+
+This is an optional field that defines whether the post flair that triggered the action should be cleared. Omitting it is the same as setting it to false.
+
+If you also specify the `postFlair` field, this flag will be ignored.
+
+---
+
+&nbsp;
+
+
 #### `userFlair`
 
 | Key      | `userFlair` |
@@ -155,6 +173,8 @@ This is an optional field that defines whether the post author should be added o
 | Optional | Yes         |
 
 This is an optional field that defines a flair that should be applied to the author. This value is an object with the keys `templateId`, `cssClass`, and `text`.
+
+Please note that defining the `userFlair` field will cause `clearUserFlair` flag to be ignored.
 
 &nbsp;
 
@@ -196,6 +216,63 @@ This is a required field that defines the flair CSS class that is applied to the
 | Placeholders | Yes    |
 
 This is a required field that defines the flair text that is applied to the author. It can be an empty string if you do not wish to include text in the flair.
+
+---
+
+&nbsp;
+
+
+#### `postFlair`
+
+| Key      | `postFlair` |
+| :------- | :---------- |
+| Value    | object      |
+| Optional | Yes         |
+
+This is an optional field that defines a flair that should be applied to the original post after the flair action is triggered. This value is an object with the required keys `templateId`, `cssClass`, and `text`.
+
+Please note that defining the `postFlair` field will cause `clearPostFlair` to be ignored.
+
+&nbsp;
+
+
+##### `postFlair.templateId`
+
+| Key          | `templateId` |
+| :----------- | :----------- |
+| Value        | string       |
+| Optional     | No           |
+| Placeholders | No           |
+
+This is a required field that defines the flair template ID that will be applied to the post. It can also be an empty string if you do not wish to apply a template.
+
+The easiest way to find a user flair template ID is to go to Mod Tools -> Post Flair on new Reddit and click on copy ID.
+
+&nbsp;
+
+
+##### `postFlair.cssClass`
+
+| Key          | `cssClass` |
+| :----------- | :--------- |
+| Value        | string     |
+| Optional     | No         |
+| Placeholders | No         |
+
+This is a required field that defines the flair CSS class that is applied to the post. It can be an empty string if you do not wish to include a CSS class in the flair.
+
+&nbsp;
+
+
+##### `postFlair.text`
+
+| Key          | `text` |
+| :----------- | :----- |
+| Value        | string |
+| Optional     | No     |
+| Placeholders | Yes    |
+
+This is a required field that defines the flair text that is applied to the post. It can be an empty string if you do not wish to include text in the flair.
 
 ---
 
@@ -347,7 +424,7 @@ Placeholders are keywords surrounded by double curly brackets, they are case-sen
 
 The ``{{mod}}`` placeholder is populated first to prevent crafted inputs from revealing the identity of the moderator that triggered the action. The rest are populated in no particular order. 
 
-Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). 
+Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). Note that values are based on the values of the post at the time the flair was set, meaning they will not reflect any changes made to the post (such as editing flairs) by the bot.
 
 Below is a list of all supported placeholders:
 
@@ -476,7 +553,9 @@ This is the timezone used for `{{created_custom}}`, `{{actioned_custom}}`, and `
 
 ### Locale
 
-This field is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. It affects locale specific values such as the first day of the week, month names, abbrivations, etc. The default value is `enUS`. Below is a table of all supported locales:
+This field is used for `{{created_custom}}`, `{{actioned_custom}}`, and `{{time_custom}}` placeholders. It affects locale specific values such as the first day of the week, month names, abbrivations, etc. The default value is `enUS`. 
+
+Below is a table of all supported locales in the options dropdown and their corresponding values:
 
 | Name                      | Value      |
 | :------------------------ | :--------- |

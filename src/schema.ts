@@ -8,6 +8,9 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
         type: "object",
         additionalProperties: false,
         properties: {
+            templateId: {
+                type: "string",
+            },
             action: {
                 enum: [
                     "approve",
@@ -17,33 +20,12 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "string",
                 nullable: true,
             },
-            ban: {
-                additionalProperties: false,
-                properties: {
-                    duration: {
-                        type: "number",
-                        nullable: true,
-                    },
-                    message: {
-                        type: "string",
-                    },
-                    note: {
-                        type: "string",
-                    },
-                    reason: {
-                        type: "string",
-                    },
-                },
-                required: [
-                    "message",
-                    "note",
-                    "reason",
+            contributor: {
+                enum: [
+                    "add",
+                    "remove",
                 ],
-                type: "object",
-                nullable: true,
-            },
-            clearPostFlair: {
-                type: "boolean",
+                type: "string",
                 nullable: true,
             },
             comment: {
@@ -75,12 +57,29 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "object",
                 nullable: true,
             },
-            contributor: {
-                enum: [
-                    "add",
-                    "remove",
+            ban: {
+                additionalProperties: false,
+                properties: {
+                    duration: {
+                        type: "number",
+                        nullable: true,
+                    },
+                    message: {
+                        type: "string",
+                    },
+                    note: {
+                        type: "string",
+                    },
+                    reason: {
+                        type: "string",
+                    },
+                },
+                required: [
+                    "message",
+                    "note",
+                    "reason",
                 ],
-                type: "string",
+                type: "object",
                 nullable: true,
             },
             lock: {
@@ -91,10 +90,36 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "boolean",
                 nullable: true,
             },
-            templateId: {
-                type: "string",
+            clearUserFlair: {
+                type: "boolean",
+                nullable: true,
+            },
+            clearPostFlair: {
+                type: "boolean",
+                nullable: true,
             },
             userFlair: {
+                additionalProperties: false,
+                properties: {
+                    cssClass: {
+                        type: "string",
+                    },
+                    templateId: {
+                        type: "string",
+                    },
+                    text: {
+                        type: "string",
+                    },
+                },
+                required: [
+                    "cssClass",
+                    "templateId",
+                    "text",
+                ],
+                type: "object",
+                nullable: true,
+            },
+            postFlair: {
                 additionalProperties: false,
                 properties: {
                     cssClass: {

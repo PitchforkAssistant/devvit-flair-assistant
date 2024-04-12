@@ -112,5 +112,17 @@
     {
         "templateId": "522ae29a-51e2-11ee-b69a-e292f6735c3f",
         "contributor": "remove"
+    },
+    {
+        "templateId": "ab3f87f0-f8cc-11ee-afdf-32aecbcc7657",
+        "postFlair": {
+            "text": "Test Flair",
+            "cssClass": "",
+            "templateId": "c302a528-1e3b-11ee-82bf-a2d6bf3c0009"
+        }
+    },
+    {
+        "templateId": "cf494ee2-f8cc-11ee-9f10-faaf8d48a409",
+        "clearUserFlair": true
     }
 ]
