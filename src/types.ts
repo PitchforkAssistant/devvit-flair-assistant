@@ -19,6 +19,11 @@ export type FlairBan = {
     reason: string;
 }
 
+export type FlairRemovalReason = {
+    reasonId: string;
+    note?: string;
+}
+
 export type FlairAction = "remove" | "spam" | "approve";
 
 export type FlairContributor = "add" | "remove";
@@ -35,6 +40,7 @@ export interface FlairEntry {
     clearUserFlair?: boolean;
     postFlair?: FlairChangeOptions;
     userFlair?: FlairChangeOptions;
+    removalReason?: FlairRemovalReason;
 }
 
 export type FlairEntries = FlairEntry[];

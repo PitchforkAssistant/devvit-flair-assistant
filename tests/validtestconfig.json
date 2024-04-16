@@ -124,5 +124,13 @@
     {
         "templateId": "cf494ee2-f8cc-11ee-9f10-faaf8d48a409",
         "clearUserFlair": true
+    },
+    {
+        "templateId": "06a1b1ce-fc13-11ee-bdf3-0264bc575345",
+        "action": "remove",
+        "removalReason": {
+            "reasonId": "39e84490-597b-4d42-9bfe-f45431780851",
+            "note": "Private Removal Note"
+        }
     }
 ]

@@ -10,7 +10,7 @@ Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
 Flair Assistant Config Tool: https://pitchforkassistant.github.io/devvit-flair-assistant/
 
-Schema Validator/Example: https://www.jsonschemavalidator.net/s/VEEIzHlp
+Schema Validator/Example: https://www.jsonschemavalidator.net/s/BvXsUJdg
 
 
 # Configuration
@@ -44,7 +44,7 @@ The app skips certain actions if the moderator that set the post's flair already
 
 This field accepts the configuration for each flair using a specific JSON structure. You can generate it using the [Flair Assistant Config Tool](https://pitchforkassistant.github.io/devvit-flair-assistant/).
 
-If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/VEEIzHlp). 
+If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/BvXsUJdg). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 
@@ -418,13 +418,55 @@ This is an optional field that defines whether the comment should be distinguish
 &nbsp;
 
 
+---
+
+
+#### `removalReason`
+
+| Key      | `removalReason` |
+| :------- | :-------------- |
+| Value    | object          |
+| Optional | Yes             |
+
+This is an optional field that allows you to apply a native Reddit removal reason to the post. This value is an object that takes the removal reason's ID and an optional mod note.
+
+&nbsp;
+
+
+##### `removalReason.reasonId`
+
+| Key          | `reasonId` |
+| :----------- | :--------- |
+| Value        | string     |
+| Optional     | No         |
+| Placeholders | No         |
+
+This is a required field that defines the ID of the removal reason that will be applied to the post. As of writing this, there is no easy way to find the ID of a removal reason, you'll either need to use your browser's dev tools, Reddit's API or a Devvit app like [Show Removal Reason IDs](https://developers.reddit.com/apps/removalreasonids) to find it.
+
+&nbsp;
+
+
+##### `removalReason.note`
+
+| Key          | `note` |
+| :----------- | :----- |
+| Value        | string |
+| Optional     | Yes    |
+| Placeholders | Yes    |
+
+
+This is an optional field that defines the private mod note that will be attached to the removal reason. Please note that this note is [not visible to the user](https://i.imgur.com/EpFkMks.png), you'll need to use the other fields for a proper removal message.
+
+&nbsp;
+
+
 ### Placeholders
 
 Placeholders are keywords surrounded by double curly brackets, they are case-sensitive. Placeholders are replaced with their values when an action is performed. 
 
 The ``{{mod}}`` placeholder is populated first to prevent crafted inputs from revealing the identity of the moderator that triggered the action. The rest are populated in no particular order. 
 
-Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). Note that values are based on the values of the post at the time the flair was set, meaning they will not reflect any changes made to the post (such as editing flairs) by the bot.
+Any placeholders that are not applicable to the post are replaced with an empty string (ie. removed). Placeholder values are based on the values of the post at the time the flair was set, meaning they will not reflect any changes made to the post (such as editing flairs) by the bot.
 
 Below is a list of all supported placeholders:
 

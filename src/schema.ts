@@ -140,6 +140,23 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "object",
                 nullable: true,
             },
+            removalReason: {
+                additionalProperties: false,
+                properties: {
+                    reasonId: {
+                        type: "string",
+                    },
+                    note: {
+                        type: "string",
+                        nullable: true,
+                    },
+                },
+                required: [
+                    "reasonId",
+                ],
+                type: "object",
+                nullable: true,
+            },
         },
         required: [
             "templateId",

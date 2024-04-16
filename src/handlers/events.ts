@@ -93,6 +93,19 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
         }
     }
 
+    if (flairConfig.removalReason) {
+        if (!await hasPerformedAction(context.reddit, subreddit, postId, "addremovalreason", moderatorName, false, actionDebounce)) {
+            console.log(`Adding removal reason ${flairConfig.removalReason.reasonId} to ${postId}`);
+            await context.reddit.addRemovalNote({
+                itemIds: [postId],
+                reasonId: flairConfig.removalReason.reasonId,
+                modNote: flairConfig.removalReason.note ? replacePlaceholders(flairConfig.removalReason.note, placeholders) : undefined,
+            }).catch(e => console.error(`Failed to add removal reason ${flairConfig.removalReason?.reasonId} to ${postId}`, e));
+        } else {
+            console.log(`Skipped adding removal reason ${flairConfig.removalReason.reasonId} to ${postId} because it got an addremovalreason action in the past ${actionDebounce} seconds.`);
+        }
+    }
+
     // Handle setting or clearing the post flair
     if (flairConfig.postFlair) {
         const postFlairOptions: SetPostFlairOptions = {
