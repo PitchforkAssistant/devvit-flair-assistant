@@ -10,7 +10,21 @@ Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
 Flair Assistant Config Tool: https://pitchforkassistant.github.io/devvit-flair-assistant/
 
-Schema Validator/Example: https://www.jsonschemavalidator.net/s/9DTnA6kM
+Schema Validator/Example: https://www.jsonschemavalidator.net/s/TCCwFOBp
+
+# Change Log
+
+This section summarizes the changes made for each published version of the app, unpublished versions are not listed, but you can always view the full changes to the code on [GitHub](https://github.com/PitchforkAssistant/devvit-flair-assistant).
+
+## 0.3.0
+
+This update added multiple new possible actions that flairs can trigger:
+
+- [`clearUserFlair`](https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_clearuserflair) - Clears the user flair of the post's author. This was possible before by setting the `userFlair` field to an empty object, but now it has its own field for clarity.
+- [`postFlair`](https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_userflair) - Changes the post's flair.
+- [`removalReason`](https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_removalreason) - Applies a native Reddit removal reason to the post.
+- [`userNote`](https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_usernote) - Adds a user note to the author of the post.
+- [`message`](https://www.reddit.com/r/PitchforkAssistant/wiki/flairassistant#wiki_message) - Sends a message to the post's author or the subreddit.
 
 
 # Configuration
@@ -44,7 +58,7 @@ The app skips certain actions if the moderator that set the post's flair already
 
 This field accepts the configuration for each flair using a specific JSON structure. You can generate it using the [Flair Assistant Config Tool](https://pitchforkassistant.github.io/devvit-flair-assistant/).
 
-If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/9DTnA6kM). 
+If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/TCCwFOBp). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 
@@ -497,6 +511,74 @@ This is a required field that defines the label that is used for the added user 
 
 
 This field specifies the text of the user note. It supports placeholders. If a userNote object is defined, this field must be present.
+
+&nbsp;
+
+
+---
+
+
+#### `message`
+
+| Key      | `message` |
+| :------- | :-------- |
+| Value    | object    |
+| Optional | Yes       |
+
+This field allows you to send a message to the post's author or the subreddit itself.
+
+&nbsp;
+
+
+##### `message.to`
+
+| Key      | `label`                     |
+| :------- | :-------------------------- |
+| Value    | `"author"` or `"subreddit"` |
+| Optional | No                          |
+
+This is a required field that defines the recipient of the message. All messages are sent as modmails, so the author will receive a message from the subreddit with the bot's name hidden. If the recipient is the subreddit, the message will be created under mod discussions.
+
+&nbsp;
+
+
+##### `message.subject`
+
+| Key          | `subject` |
+| :----------- | :-------- |
+| Value        | string    |
+| Optional     | No        |
+| Placeholders | Yes       |
+
+
+This is a required field under the message objec that specifies the subject line of the message. It supports placeholders, but the final subject must be shorter than 100 characters.
+
+&nbsp;
+
+
+##### `message.body`
+
+| Key          | `note` |
+| :----------- | :----- |
+| Value        | string |
+| Optional     | No     |
+| Placeholders | Yes    |
+
+
+This required message field specifies the text content of the message. Supports placeholders.
+
+&nbsp;
+
+
+##### `message.archive`
+
+| Key      | `archive` |
+| :------- | :-------- |
+| Value    | boolean   |
+| Optional | Yes       |
+
+
+This is an optional field that defines whether the message should be marked as read and automatically archived after sending. Archiving mod discussions is not possible, but setting this to true will still mark them as read. Omitting this is equivalent to setting it to false.
 
 &nbsp;
 

@@ -184,6 +184,35 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "object",
                 nullable: true,
             },
+            message: {
+                additionalProperties: false,
+                properties: {
+                    to: {
+                        enum: [
+                            "author",
+                            "subreddit",
+                        ],
+                        type: "string",
+                    },
+                    subject: {
+                        type: "string",
+                    },
+                    body: {
+                        type: "string",
+                    },
+                    archive: {
+                        type: "boolean",
+                        nullable: true,
+                    },
+                },
+                required: [
+                    "to",
+                    "subject",
+                    "body",
+                ],
+                type: "object",
+                nullable: true,
+            },
         },
         required: [
             "templateId",

@@ -224,4 +224,32 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             console.log(`Skipped comment on ${postId} because it got a sticky/distinguish action in the past ${actionDebounce} seconds.`);
         }
     }
+
+    if (flairConfig.message) {
+        // TODO: Look into something like hasPerformedActions to avoid duplicating messages already sent by humans.
+        const body = replacePlaceholders(flairConfig.message.body, placeholders);
+        const subject = replacePlaceholders(flairConfig.message.subject, placeholders);
+        const to = flairConfig.message.to === "author" ? author : undefined; // Either author or undefined for internal subreddit message.
+
+        console.log(`Messaging ${to ?? "subreddit"}`);
+        const modConvo = await context.reddit.modMail.createConversation({
+            subredditName: subreddit,
+            subject,
+            body,
+            to,
+            isAuthorHidden: to ? true : false,
+        }).catch(e => console.error(`Failed to create conversation with ${to ?? "subreddit"}`, e));
+
+        if (flairConfig.message.archive && modConvo && modConvo.conversation.id) {
+            console.log(`Marking as read ${modConvo.conversation.id}`);
+            context.reddit.modMail.getConversation({
+                conversationId: modConvo.conversation.id,
+                markRead: true,
+            }).catch(e => console.error(`Failed to mark conversation ${modConvo.conversation.id} as read`, e));
+            if (to) { // Internal messages cannot be archived, so only archive if it's a message to the author.
+                console.log(`Archiving ${modConvo.conversation.id}`);
+                context.reddit.modMail.archiveConversation(modConvo.conversation.id).catch(e => console.error(`Failed to archive conversation ${modConvo.conversation.id}`, e));
+            }
+        }
+    }
 }

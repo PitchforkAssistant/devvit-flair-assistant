@@ -29,7 +29,7 @@ export const DEFAULTS = {
 
 // Links
 export const LINKS = {
-    SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/9DTnA6kM",
+    SCHEMA_VALIDATOR: "https://www.jsonschemavalidator.net/s/TCCwFOBp",
 };
 
 // Errors

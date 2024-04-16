@@ -138,6 +138,22 @@
         "userNote": {
             "note": "Mod Note by {{mod}}",
             "label": "SPAM_WATCH"
+        },
+        "message": {
+            "subject": "Notification: Possible Spam",
+            "body": "{{mod}} has marked the following post for spam watch: {{permalink}}",
+            "to": "subreddit",
+            "archive": true
+        }
+    },
+    {
+        "templateId": "96a2d1d4-fc1a-11ee-85ed-921755411778",
+        "action": "remove",
+        "message": {
+            "subject": "Notification: Your post has been removed",
+            "body": "Your post has been removed for violating rule 427. Remember, you're on {{subreddit}}!",
+            "to": "author",
+            "archive": true
         }
     }
 ]

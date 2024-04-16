@@ -31,6 +31,13 @@ export type FlairNote = {
     note: string;
 }
 
+export type FlairMessage = {
+    to: "author" | "subreddit";
+    subject: string;
+    body: string;
+    archive?: boolean;
+}
+
 export type FlairAction = "remove" | "spam" | "approve";
 
 export type FlairContributor = "add" | "remove";
@@ -49,6 +56,7 @@ export interface FlairEntry {
     userFlair?: FlairChangeOptions;
     removalReason?: FlairRemovalReason;
     userNote?: FlairNote;
+    message?: FlairMessage;
 }
 
 export type FlairEntries = FlairEntry[];
