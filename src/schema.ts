@@ -157,6 +157,33 @@ export const flairEntriesSchema: JSONSchemaType<FlairEntries> = {
                 type: "object",
                 nullable: true,
             },
+            userNote: {
+                additionalProperties: false,
+                properties: {
+                    note: {
+                        type: "string",
+                    },
+                    label: {
+                        enum: [
+                            "BOT_BAN",
+                            "PERMA_BAN",
+                            "BAN",
+                            "ABUSE_WARNING",
+                            "SPAM_WARNING",
+                            "SPAM_WATCH",
+                            "SOLID_CONTRIBUTOR",
+                            "HELPFUL_USER",
+                        ],
+                        type: "string",
+                    },
+                },
+                required: [
+                    "note",
+                    "label",
+                ],
+                type: "object",
+                nullable: true,
+            },
         },
         required: [
             "templateId",

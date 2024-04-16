@@ -106,6 +106,21 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
         }
     }
 
+    if (flairConfig.userNote) {
+        if (!await hasPerformedAction(context.reddit, subreddit, authorId, "addnote", moderatorName, false, actionDebounce)) {
+            console.log(`Adding user note to ${author}`);
+            await context.reddit.addModNote({
+                user: author,
+                redditId: postId,
+                note: replacePlaceholders(flairConfig.userNote.note, placeholders),
+                label: flairConfig.userNote.label,
+                subreddit,
+            }).catch(e => console.error(`Failed to add user note to ${author}`, e));
+        } else {
+            console.log(`Skipped adding user note to ${author} because it got an addnote action in the past ${actionDebounce} seconds.`);
+        }
+    }
+
     // Handle setting or clearing the post flair
     if (flairConfig.postFlair) {
         const postFlairOptions: SetPostFlairOptions = {

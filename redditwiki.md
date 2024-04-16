@@ -10,7 +10,7 @@ Source: https://github.com/PitchforkAssistant/devvit-flair-assistant
 
 Flair Assistant Config Tool: https://pitchforkassistant.github.io/devvit-flair-assistant/
 
-Schema Validator/Example: https://www.jsonschemavalidator.net/s/BvXsUJdg
+Schema Validator/Example: https://www.jsonschemavalidator.net/s/9DTnA6kM
 
 
 # Configuration
@@ -44,7 +44,7 @@ The app skips certain actions if the moderator that set the post's flair already
 
 This field accepts the configuration for each flair using a specific JSON structure. You can generate it using the [Flair Assistant Config Tool](https://pitchforkassistant.github.io/devvit-flair-assistant/).
 
-If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/BvXsUJdg). 
+If you wish to manually edit or create this config, I would recommend familiarizing yourself with the JSON syntax and then looking at [an example config](https://github.com/PitchforkAssistant/devvit-flair-assistant/blob/main/tests/validtestconfig.json) and then [validating your own config using a JSON schema validator](https://www.jsonschemavalidator.net/s/9DTnA6kM). 
 
 The FlairAssistant configuration is a list of objects, where each object contains the flair's template ID and the desired actions. The most basic valid configuration that does nothing is an empty array or `[]`. 
 
@@ -456,6 +456,47 @@ This is a required field that defines the ID of the removal reason that will be 
 
 
 This is an optional field that defines the private mod note that will be attached to the removal reason. Please note that this note is [not visible to the user](https://i.imgur.com/EpFkMks.png), you'll need to use the other fields for a proper removal message.
+
+&nbsp;
+
+
+---
+
+
+#### `userNote`
+
+| Key      | `userNote` |
+| :------- | :--------- |
+| Value    | object     |
+| Optional | Yes        |
+
+This is an optional field that allows you to add a user note to the post's author.
+
+&nbsp;
+
+
+##### `userNote.label`
+
+| Key      | `label`                                                                                                                              |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------- |
+| Value    | `"BOT_BAN"`, `"PERMA_BAN"`, `"BAN"`, `"ABUSE_WARNING"`, `"SPAM_WARNING"`, `"SPAM_WATCH"`, `"SOLID_CONTRIBUTOR"`, or `"HELPFUL_USER"` |
+| Optional | No                                                                                                                                   |
+
+This is a required field that defines the label that is used for the added user note. If a userNote object is defined, this field must be present.
+
+&nbsp;
+
+
+##### `userNote.note`
+
+| Key          | `note` |
+| :----------- | :----- |
+| Value        | string |
+| Optional     | No     |
+| Placeholders | Yes    |
+
+
+This field specifies the text of the user note. It supports placeholders. If a userNote object is defined, this field must be present.
 
 &nbsp;
 

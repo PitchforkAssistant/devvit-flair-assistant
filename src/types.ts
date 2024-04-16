@@ -1,3 +1,5 @@
+import {UserNoteLabel} from "@devvit/public-api";
+
 export type FlairComment = {
     body: string;
     sticky?: boolean;
@@ -24,6 +26,11 @@ export type FlairRemovalReason = {
     note?: string;
 }
 
+export type FlairNote = {
+    label: UserNoteLabel,
+    note: string;
+}
+
 export type FlairAction = "remove" | "spam" | "approve";
 
 export type FlairContributor = "add" | "remove";
@@ -41,6 +48,7 @@ export interface FlairEntry {
     postFlair?: FlairChangeOptions;
     userFlair?: FlairChangeOptions;
     removalReason?: FlairRemovalReason;
+    userNote?: FlairNote;
 }
 
 export type FlairEntries = FlairEntry[];

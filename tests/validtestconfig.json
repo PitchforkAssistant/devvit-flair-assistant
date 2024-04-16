@@ -132,5 +132,12 @@
             "reasonId": "39e84490-597b-4d42-9bfe-f45431780851",
             "note": "Private Removal Note"
         }
+    },
+    {
+        "templateId": "6eba26ac-fc17-11ee-a21b-3249aeeb7cce",
+        "userNote": {
+            "note": "Mod Note by {{mod}}",
+            "label": "SPAM_WATCH"
+        }
     }
 ]
