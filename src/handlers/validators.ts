@@ -1,7 +1,7 @@
 import {SettingsFormFieldValidatorEvent} from "@devvit/public-api";
 import AjvModule from "ajv";
-import {FlairEntries} from "../types.js";
-import {flairEntriesSchema} from "../schema.js";
+import {FlairEntries} from "../schema/types.js";
+import {flairEntriesSchema} from "../schema/schema.js";
 import {ERRORS} from "../constants.js";
 
 const ajv = new AjvModule.default();

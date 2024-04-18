@@ -1,10 +1,7 @@
 import {ModAction, PostV2} from "@devvit/protos";
 import {BanUserOptions, TriggerContext, SetUserFlairOptions, SetPostFlairOptions} from "@devvit/public-api";
-import {FlairEntries} from "../types.js";
-import {DEFAULTS} from "../constants.js";
-import {validateFlairEntriesSchema} from "./validators.js";
-import {getLocaleFromString, toNumberOrDefault, hasPerformedAction, hasPerformedActions, replacePlaceholders, getRecommendedPlaceholdersFromModAction, assembleRemovalReason, submitPostReply, ignoreReportsByPostId, setLockByPostId} from "devvit-helpers";
-import {enUS} from "date-fns/locale";
+import {hasPerformedAction, hasPerformedActions, replacePlaceholders, getRecommendedPlaceholdersFromModAction, assembleRemovalReason, submitPostReply, ignoreReportsByPostId, setLockByPostId} from "devvit-helpers";
+import {getFlairAppSettings} from "../appSettings.js";
 
 export async function handleFlairUpdate (event: ModAction, context: TriggerContext) {
     if (event.action !== "editflair") {
@@ -39,35 +36,24 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     }
 
     // Skip flair updates performed by the app user.
-    // Currently the config only supports clearing post flair, so the preceding template check should prevent us from getting this far.
     const appUserId = context.appAccountId;
     if (event.moderator.id === appUserId) {
         console.log(`Skipping flair update for ${postId} because it was performed by the app user.`);
         return;
     }
 
-    // Get all settings and validate the flair config. We have no point in continuing if we can't trust the config.
-    const allSettings = await context.settings.getAll();
-    const fullFlairConfig = JSON.parse(allSettings.flairConfig?.toString() ?? "") as FlairEntries;
-    if (!validateFlairEntriesSchema(fullFlairConfig)) {
-        throw new Error(`Invalid flair config: ${JSON.stringify(fullFlairConfig)}`);
-    }
+    // Get all settings.
+    console.log("Getting flair app settings");
+    const appSettings = await getFlairAppSettings(context.settings);
+    const {headerTemplate, footerTemplate, actionDebounce, customDateformat} = appSettings;
 
     // Get the flair config for the template ID. Again, no point in continuing if there's no config for the template.
-    const flairConfig = fullFlairConfig.find(entry => entry.templateId === templateId);
+    const flairConfig = appSettings.flairConfig.find(entry => entry.templateId === templateId);
     if (!flairConfig) {
         console.log(`No config for template id ${templateId}`);
         return;
     }
     console.log(`Handling flair update for template id: ${templateId}`);
-
-    // Get some other settings we need.
-    const actionDebounce = toNumberOrDefault(allSettings.actionDebounce, DEFAULTS.ACTION_DEBOUNCE);
-    const customDateformat = {
-        dateformat: allSettings.customDateTemplate?.toString() ?? "",
-        timezone: allSettings.customTimezone?.toString() ?? "",
-        locale: getLocaleFromString(allSettings.customLocale?.toString() ?? "") ?? enUS,
-    };
 
     // Convert the mod action to a list of placeholders. We know targetPost exists because we checked for it at the beginning.
     const placeholders = await getRecommendedPlaceholdersFromModAction(event as ModAction & {targetPost: PostV2}, customDateformat);
@@ -212,8 +198,8 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             const commentText = assembleRemovalReason(
                 {
                     body: flairConfig.comment.body,
-                    header: flairConfig.comment.headerFooter ? allSettings.headerTemplate?.toString() ?? "" : "",
-                    footer: flairConfig.comment.headerFooter ? allSettings.footerTemplate?.toString() ?? "" : "",
+                    header: flairConfig.comment.headerFooter ? headerTemplate : "",
+                    footer: flairConfig.comment.headerFooter ? footerTemplate : "",
                     joiner: "\n\n",
                 },
                 placeholders

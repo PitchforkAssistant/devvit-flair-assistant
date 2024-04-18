@@ -42,7 +42,7 @@ export type FlairAction = "remove" | "spam" | "approve";
 
 export type FlairContributor = "add" | "remove";
 
-export interface FlairEntry {
+export type FlairEntry = {
     templateId: string;
     action?: FlairAction;
     contributor?: FlairContributor;
