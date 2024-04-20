@@ -160,7 +160,7 @@ function generateConfig() {
 
             const noteBody = configElement.querySelector("[name=flairUserNoteBody]").value;
             if (noteBody) {
-                userNote["subject"] = noteBody;
+                userNote["note"] = noteBody;
             } else {
                 errors.push(`Config ${configIndex}: Missing user note body`);
                 return;
