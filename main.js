@@ -296,7 +296,7 @@ function generateConfig() {
                 reason["note"] = reasonNote;
             }
 
-            config["reason"] = reason;
+            config["removalReason"] = reason;
         }
 
 
