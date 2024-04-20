@@ -280,6 +280,26 @@ function generateConfig() {
             }
         }
 
+        const flairReasonToggle = configElement.querySelector("[name=flairReasonToggle]").checked;
+        if (flairReasonToggle) {
+            const reason = {};
+            const reasonId = configElement.querySelector("[name=flairReasonId]").value;
+            if (reasonId) {
+                reason["reasonId"] = reasonId;
+            } else {
+                errors.push(`Config ${configIndex}: Missing removal reason ID`);
+                return;
+            }
+
+            const reasonNote = configElement.querySelector("[name=flairReasonNote]").value;
+            if (reasonNote) {
+                reason["note"] = reasonNote;
+            }
+
+            config["reason"] = reason;
+        }
+
+
         // only add if there's at least two keys
         if (Object.keys(config).length > 1) {
             allConfigs.push(config);

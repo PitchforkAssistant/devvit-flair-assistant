@@ -535,6 +535,35 @@
                                 </label>
                             </fieldset>
                         </div>
+                        <div class="option">
+                            <label data-name="flairReasonToggle">
+                                Removal Reason
+                                <span class="switch">
+                                    <input type="checkbox" name="flairReasonToggle" data-toggles="flairReasonGroup">
+                                    <span class="slider"></span>
+                                </span>
+                            </label>
+                        
+                            <fieldset class="optionGroup disabled" name="flairReasonGroup" disabled>
+                                <label data-name="flairReasonId">
+                                    Removal Reason ID
+                                    <input type="text" name="flairReasonId" class="templateId"
+                                        placeholder="00000000-0000-0000-0000-000000000000">
+                        
+                                <label data-name="flairReasonNote">
+                                    Mod Log Note
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                    <input type="text" name="flairReasonNote" maxlength="300"
+                                        placeholder="{{permalink}}">
+                                </label>
+                            </fieldset>
+                        </div>
                         <button type="button" name="delete" class="delete danger">Delete</button>
                     </fieldset>
                 </div>
