@@ -30,8 +30,8 @@ export async function getFlairAppSettings (settings: SettingsClient): Promise<Fl
         throw new Error(`Invalid flair config: ${JSON.stringify(flairConfig)}`);
     }
 
-    const customDateformat = {
-        template: rawSettings.customDateTemplate ?? "YYYY-MM-DD",
+    const customDateformat: Partial<CustomDateformat> = {
+        dateformat: rawSettings.customDateTemplate ?? "YYYY-MM-DD",
         timezone: rawSettings.customTimezone ?? "UTC",
         locale: getLocaleFromString(rawSettings.customLocale ?? "en"),
     };
