@@ -189,6 +189,43 @@ function generateConfig() {
             config["comment"] = comment;
         }
 
+        const flairMessageToggle = configElement.querySelector("[name=flairMessageToggle]").checked;
+        if (flairMessageToggle) {
+            const message = {};
+
+            const messageSubject = configElement.querySelector("[name=flairMessageSubject]").value;
+            if (messageSubject) {
+                message["subject"] = messageSubject;
+            } else {
+                errors.push(`Config ${configIndex}: Missing message subject`);
+                return;
+            }
+
+            const messageBody = configElement.querySelector("[name=flairMessageBody]").value;
+            if (messageBody) {
+                message["body"] = messageBody;
+            } else {
+                errors.push(`Config ${configIndex}: Missing message body`);
+                return;
+            }
+
+            const messageArchive = configElement.querySelector("[name=flairMessageArchive]").checked;
+            if (messageArchive) {
+                message["archive"] = true;
+            }
+
+            const messageTo = configElement.querySelector("[name=flairMessageTo]").value;
+            if (messageTo === "author" || messageTo === "subreddit") {
+                message["to"] = messageTo;
+            } else {
+                errors.push(`Config ${configIndex}: Invalid message target ${messageTo}`);
+                return;
+            }
+
+            config["message"] = message;
+        }
+
+
         const flairPostFlairToggle = configElement.querySelector("[name=flairPostFlairToggle]").checked;
         if (flairPostFlairToggle) {
             const clearPostFlair = configElement.querySelector("[name=flairPostClear]").checked;

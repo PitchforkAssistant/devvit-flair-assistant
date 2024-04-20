@@ -305,6 +305,61 @@
                         </div>
 
                         <div class="option">
+                            <label data-name="flairMessageToggle">
+                                Message
+                                <span class="switch">
+                                    <input type="checkbox" name="flairMessageToggle" data-toggles="flairMessageGroup">
+                                    <span class="slider"></span>
+                                </span>
+                            </label>
+                        
+                            <fieldset class="optionGroup disabled" name="flairMessageGroup" disabled>
+                                <label data-name="flairMessageTo">
+                                    To
+                                    <select name="flairMessageTo" required>
+                                        <option value="author">Author</option>
+                                        <option value="subreddit">Subreddit</option>
+                                    </select>
+                                </label>
+                        
+                                <label data-name="flairMessageArchive">
+                                    Archive On Send
+                                    <span class="switch">
+                                        <input type="checkbox" name="flairMessageArchive" checked>
+                                        <span class="slider"></span>
+                                    </span>
+                                </label>
+                        
+                                <label data-name="flairMessageSubject">
+                                    Subject
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                    <input type="text" name="flairMessageSubject" minlength="1" maxlength="300" required
+                                        placeholder="{{permalink}}">
+                                </label>
+                        
+                                <label data-name="flairMessageBody">
+                                    Body
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                        
+                                    <textarea name="flairMessageBody" rows="4" minlength="1" required
+                                        placeholder="Your post violated a subreddit rule."></textarea>
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="option">
                             <label data-name="flairBanToggle">
                                 Ban
                                 <span class="switch">
