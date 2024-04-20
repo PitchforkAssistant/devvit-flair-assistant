@@ -65,13 +65,13 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             console.log(`Performing action ${flairConfig.action} on post ${postId}`);
             switch (flairConfig.action) {
             case "remove":
-                context.reddit.remove(postId, false).catch(e => console.error(`Failed to remove ${postId}`, e));
+                await context.reddit.remove(postId, false).catch(e => console.error(`Failed to remove ${postId}`, e));
                 break;
             case "spam":
-                context.reddit.remove(postId, true).catch(e => console.error(`Failed to spam ${postId}`, e));
+                await context.reddit.remove(postId, true).catch(e => console.error(`Failed to spam ${postId}`, e));
                 break;
             case "approve":
-                context.reddit.approve(postId).catch(e => console.error(`Failed to approve ${postId}`, e));
+                await context.reddit.approve(postId).catch(e => console.error(`Failed to approve ${postId}`, e));
                 break;
             }
         } else {
@@ -117,10 +117,10 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             cssClass: flairConfig.postFlair.cssClass,
         };
         console.log(`Setting post flair for ${postId}`);
-        context.reddit.setPostFlair(postFlairOptions).catch(e => console.error(`Failed to set post flair for ${postId}`, e));
+        await context.reddit.setPostFlair(postFlairOptions).catch(e => console.error(`Failed to set post flair for ${postId}`, e));
     } else if (flairConfig.clearPostFlair) {
         console.log(`Clearing post flair for ${postId}`);
-        context.reddit.removePostFlair(subreddit, postId).catch(e => console.error(`Failed to clear post flair for ${postId}`, e));
+        await context.reddit.removePostFlair(subreddit, postId).catch(e => console.error(`Failed to clear post flair for ${postId}`, e));
     }
 
     // Handle setting or clearing the user flair
@@ -133,19 +133,19 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             cssClass: flairConfig.userFlair.cssClass,
         };
         console.log(`Setting user flair for ${author}`);
-        context.reddit.setUserFlair(userFlairOptions).catch(e => console.error(`Failed to set user flair for ${author}`, e));
+        await context.reddit.setUserFlair(userFlairOptions).catch(e => console.error(`Failed to set user flair for ${author}`, e));
     } else if (flairConfig.clearUserFlair) {
         console.log(`Clearing user flair for ${author}`);
-        context.reddit.removeUserFlair(subreddit, author).catch(e => console.error(`Failed to clear user flair for ${author}`, e));
+        await context.reddit.removeUserFlair(subreddit, author).catch(e => console.error(`Failed to clear user flair for ${author}`, e));
     }
 
     // Handle contributor changes
     if (flairConfig.contributor === "add") {
         console.log(`Adding ${author} as approved user`);
-        context.reddit.approveUser(author, subreddit).catch(e => console.error(`Failed to add ${author} as contributor`, e));
+        await context.reddit.approveUser(author, subreddit).catch(e => console.error(`Failed to add ${author} as contributor`, e));
     } else if (flairConfig.contributor === "remove") {
         console.log(`Removing ${author} as approved user`);
-        context.reddit.removeUser(author, subreddit).catch(e => console.error(`Failed to remove ${author} as contributor`, e));
+        await context.reddit.removeUser(author, subreddit).catch(e => console.error(`Failed to remove ${author} as contributor`, e));
     }
 
     // Handle ban
@@ -164,7 +164,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
                 message,
                 note,
             };
-            context.reddit.banUser(banOptions).catch(e => console.error(`Failed to ban ${author}`, e));
+            await context.reddit.banUser(banOptions).catch(e => console.error(`Failed to ban ${author}`, e));
         } else {
             console.log(`Skipped ban on ${author} because they got a ban action in the past ${actionDebounce} seconds.`);
         }
@@ -228,13 +228,13 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
 
         if (flairConfig.message.archive && modConvo && modConvo.conversation.id) {
             console.log(`Marking as read ${modConvo.conversation.id}`);
-            context.reddit.modMail.getConversation({
+            await context.reddit.modMail.getConversation({
                 conversationId: modConvo.conversation.id,
                 markRead: true,
             }).catch(e => console.error(`Failed to mark conversation ${modConvo.conversation.id} as read`, e));
             if (to) { // Internal messages cannot be archived, so only archive if it's a message to the author.
                 console.log(`Archiving ${modConvo.conversation.id}`);
-                context.reddit.modMail.archiveConversation(modConvo.conversation.id).catch(e => console.error(`Failed to archive conversation ${modConvo.conversation.id}`, e));
+                await context.reddit.modMail.archiveConversation(modConvo.conversation.id).catch(e => console.error(`Failed to archive conversation ${modConvo.conversation.id}`, e));
             }
         }
     }
