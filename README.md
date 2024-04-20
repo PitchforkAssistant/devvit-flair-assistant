@@ -12,6 +12,10 @@ Schema Validator/Example: [https://www.jsonschemavalidator.net/s/TCCwFOBp/](http
 
 This section summarizes the changes made for each published version of the app, unpublished versions are not listed, but you can always view the full changes to the code on [GitHub](https://github.com/PitchforkAssistant/devvit-flair-assistant).
 
+## 0.3.1
+
+This update may fix some odd behavior with the order of actions.
+
 ### 0.3.0
 
 This update added multiple new possible actions that flairs can trigger:
