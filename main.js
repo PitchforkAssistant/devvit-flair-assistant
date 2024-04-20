@@ -154,6 +154,31 @@ function generateConfig() {
             config["ban"] = ban;
         }
 
+        const flairNoteToggle = configElement.querySelector("[name=flairUserNoteToggle]").checked;
+        if (flairNoteToggle) {
+            const userNote = {};
+
+            const noteBody = configElement.querySelector("[name=flairUserNoteBody]").value;
+            if (noteBody) {
+                userNote["subject"] = noteBody;
+            } else {
+                errors.push(`Config ${configIndex}: Missing user note body`);
+                return;
+            }
+
+            const noteLabel = configElement.querySelector("[name=flairUserNoteLabel]").value;
+            const noteLabels = ["BOT_BAN", "PERMA_BAN", "BAN", "ABUSE_WARNING", "SPAM_WARNING", "SPAM_WATCH", "SOLID_CONTRIBUTOR", "HELPFUL_USER"]
+            if (noteLabel && noteLabels.includes(noteLabel)) {
+                userNote["label"] = noteLabel;
+            } else {
+                errors.push(`Config ${configIndex}: Invalid user note label ${noteLabel}`);
+                return;
+            }
+
+
+            config["userNote"] = userNote;
+        }
+
         const flairCommentToggle = configElement.querySelector("[name=flairCommentToggle]").checked;
         if (flairCommentToggle) {
             const comment = {};

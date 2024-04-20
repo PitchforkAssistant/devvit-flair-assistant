@@ -360,6 +360,45 @@
                         </div>
 
                         <div class="option">
+                            <label data-name="flairUserNoteToggle">
+                                Note
+                                <span class="switch">
+                                    <input type="checkbox" name="flairUserNoteToggle" data-toggles="flairUserNoteGroup">
+                                    <span class="slider"></span>
+                                </span>
+                            </label>
+                        
+                            <fieldset class="optionGroup disabled" name="flairUserNoteGroup" disabled>
+                                <label data-name="flairUserNoteLabel">
+                                    Label
+                                    <select name="flairUserNoteLabel" required>
+                                        <option value="BOT_BAN">Bot Ban</option>
+                                        <option value="PERMA_BAN">Perma Ban</option>
+                                        <option value="BAN">Ban</option>
+                                        <option value="ABUSE_WARNING">Abuse Warning</option>
+                                        <option value="SPAM_WARNING">Spam Warning</option>
+                                        <option value="SPAM_WATCH">Spam Watch</option>
+                                        <option value="SOLID_CONTRIBUTOR">Solid Contributor</option>
+                                        <option value="HELPFUL_USER">Helpful User</option>
+                                    </select>
+                                </label>
+                        
+                                <label data-name="flairUserNoteBody">
+                                    Note
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="15 8 7 15" width="1em" height="1em"
+                                        stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"
+                                        stroke-linejoin="round" class="supportsPlaceholders">
+                                        <title>Supports Placeholders</title>
+                                        <path d="M12 9h.01" />
+                                        <path d="M11 12h1v4h1" />
+                                    </svg>
+                                    <input type="text" name="flairUserNoteBody" minlength="1" maxlength="300" required
+                                        placeholder="{{permalink}}">
+                                </label>
+                            </fieldset>
+                        </div>
+
+                        <div class="option">
                             <label data-name="flairBanToggle">
                                 Ban
                                 <span class="switch">
