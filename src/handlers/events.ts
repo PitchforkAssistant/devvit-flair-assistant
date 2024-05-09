@@ -1,6 +1,6 @@
 import {ModAction, PostV2} from "@devvit/protos";
 import {BanUserOptions, TriggerContext, SetUserFlairOptions, SetPostFlairOptions} from "@devvit/public-api";
-import {hasPerformedAction, hasPerformedActions, replacePlaceholders, getRecommendedPlaceholdersFromModAction, assembleRemovalReason, submitPostReply, ignoreReportsByPostId, setLockByPostId} from "devvit-helpers";
+import {hasPerformedActions, replacePlaceholders, getRecommendedPlaceholdersFromModAction, assembleRemovalReason, submitPostReply, ignoreReportsByPostId, setLockByPostId} from "devvit-helpers";
 import {getFlairAppSettings} from "../appSettings.js";
 
 export async function handleFlairUpdate (event: ModAction, context: TriggerContext) {
@@ -24,7 +24,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
 
     // Shorter variable names for frequently used properties.
     const postId = event.targetPost.id;
-    const subreddit = event.subreddit.name;
+    const subredditName = event.subreddit.name;
     const author = event.targetUser.name;
     const authorId = event.targetUser.id;
     const moderatorName = event.moderator.name;
@@ -46,6 +46,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     console.log("Getting flair app settings");
     const appSettings = await getFlairAppSettings(context.settings);
     const {headerTemplate, footerTemplate, actionDebounce, customDateformat} = appSettings;
+    const oldestCutoff = new Date(Date.now() - actionDebounce * 1000);
 
     // Get the flair config for the template ID. Again, no point in continuing if there's no config for the template.
     const flairConfig = appSettings.flairConfig.find(entry => entry.templateId === templateId);
@@ -61,7 +62,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     // Handle remove, spam, or approve action
     if (flairConfig.action) {
         // Avoids duplicating actions if the action was already performed.
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, `${flairConfig.action}link`, moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: postId, actionTypes: `${flairConfig.action}link`, moderators: moderatorName, oldestCutoff})) {
             console.log(`Performing action ${flairConfig.action} on post ${postId}`);
             switch (flairConfig.action) {
             case "remove":
@@ -80,7 +81,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     }
 
     if (flairConfig.removalReason) {
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, "addremovalreason", moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: postId, actionTypes: "addremovalreason", moderators: moderatorName, oldestCutoff})) {
             console.log(`Adding removal reason ${flairConfig.removalReason.reasonId} to ${postId}`);
             await context.reddit.addRemovalNote({
                 itemIds: [postId],
@@ -93,14 +94,14 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     }
 
     if (flairConfig.userNote) {
-        if (!await hasPerformedAction(context.reddit, subreddit, authorId, "addnote", moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: authorId, actionTypes: "addnote", moderators: moderatorName, oldestCutoff})) {
             console.log(`Adding user note to ${author}`);
             await context.reddit.addModNote({
                 user: author,
                 redditId: postId,
                 note: replacePlaceholders(flairConfig.userNote.note, placeholders),
                 label: flairConfig.userNote.label,
-                subreddit,
+                subreddit: subredditName,
             }).catch(e => console.error(`Failed to add user note to ${author}`, e));
         } else {
             console.log(`Skipped adding user note to ${author} because it got an addnote action in the past ${actionDebounce} seconds.`);
@@ -111,7 +112,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     if (flairConfig.postFlair) {
         const postFlairOptions: SetPostFlairOptions = {
             postId,
-            subredditName: subreddit,
+            subredditName,
             flairTemplateId: flairConfig.postFlair.templateId,
             text: replacePlaceholders(flairConfig.postFlair.text, placeholders),
             cssClass: flairConfig.postFlair.cssClass,
@@ -120,13 +121,13 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
         await context.reddit.setPostFlair(postFlairOptions).catch(e => console.error(`Failed to set post flair for ${postId}`, e));
     } else if (flairConfig.clearPostFlair) {
         console.log(`Clearing post flair for ${postId}`);
-        await context.reddit.removePostFlair(subreddit, postId).catch(e => console.error(`Failed to clear post flair for ${postId}`, e));
+        await context.reddit.removePostFlair(subredditName, postId).catch(e => console.error(`Failed to clear post flair for ${postId}`, e));
     }
 
     // Handle setting or clearing the user flair
     if (flairConfig.userFlair) {
         const userFlairOptions: SetUserFlairOptions = {
-            subredditName: subreddit,
+            subredditName,
             username: author,
             flairTemplateId: flairConfig.userFlair.templateId,
             text: replacePlaceholders(flairConfig.userFlair.text, placeholders),
@@ -136,22 +137,22 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
         await context.reddit.setUserFlair(userFlairOptions).catch(e => console.error(`Failed to set user flair for ${author}`, e));
     } else if (flairConfig.clearUserFlair) {
         console.log(`Clearing user flair for ${author}`);
-        await context.reddit.removeUserFlair(subreddit, author).catch(e => console.error(`Failed to clear user flair for ${author}`, e));
+        await context.reddit.removeUserFlair(subredditName, author).catch(e => console.error(`Failed to clear user flair for ${author}`, e));
     }
 
     // Handle contributor changes
     if (flairConfig.contributor === "add") {
         console.log(`Adding ${author} as approved user`);
-        await context.reddit.approveUser(author, subreddit).catch(e => console.error(`Failed to add ${author} as contributor`, e));
+        await context.reddit.approveUser(author, subredditName).catch(e => console.error(`Failed to add ${author} as contributor`, e));
     } else if (flairConfig.contributor === "remove") {
         console.log(`Removing ${author} as approved user`);
-        await context.reddit.removeUser(author, subreddit).catch(e => console.error(`Failed to remove ${author} as contributor`, e));
+        await context.reddit.removeUser(author, subredditName).catch(e => console.error(`Failed to remove ${author} as contributor`, e));
     }
 
     // Handle ban
     if (flairConfig.ban) {
         // Avoids duplicating bans if the user was already banned.
-        if (!await hasPerformedAction(context.reddit, subreddit, authorId, "banuser", moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: authorId, actionTypes: "banuser", moderators: moderatorName, oldestCutoff})) {
             console.log(`Banning ${author}`);
             const message = replacePlaceholders(flairConfig.ban.message, placeholders);
             const note = replacePlaceholders(flairConfig.ban.note, placeholders);
@@ -160,7 +161,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
                 duration: flairConfig.ban.duration,
                 context: event.targetPost.id,
                 reason: flairConfig.ban.reason,
-                subredditName: subreddit,
+                subredditName,
                 message,
                 note,
             };
@@ -172,7 +173,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
 
     // Handle ignoreReports
     if (flairConfig.ignoreReports) {
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, "ignorereports", moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: postId, actionTypes: "ignorereports", moderators: moderatorName, oldestCutoff})) {
             console.log(`Ignoring reports on ${postId}`);
             await ignoreReportsByPostId(context.reddit, postId, false).catch(e => console.error(`Failed to fetch ${postId} in redditHelpers.ignoreReportsByPostId`, e));
         } else {
@@ -182,7 +183,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
 
     // Handle locking the post
     if (flairConfig.lock) {
-        if (!await hasPerformedAction(context.reddit, subreddit, postId, "lock", moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: postId, actionTypes: "lock", moderators: moderatorName, oldestCutoff})) {
             console.log(`Locking ${postId}`);
             await setLockByPostId(context.reddit, postId, true).catch(e => console.error(`Failed to fetch ${postId} in redditHelpers.lockByPostId`, e));
         } else {
@@ -193,7 +194,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
     // Handle leaving a comment
     if (flairConfig.comment) {
         // Avoids duplicating removal reasons if the post already got a sticky/distinguish action, like when Toolbox is used.
-        if (!await hasPerformedActions(context.reddit, subreddit, postId, ["sticky", "distinguish"], moderatorName, false, actionDebounce)) {
+        if (!await hasPerformedActions(context.reddit, {subredditName, actionTargetId: postId, actionTypes: ["sticky", "distinguish"], moderators: moderatorName, oldestCutoff, includeParent: true})) {
             console.log(`Commenting on ${postId}`);
             const commentText = assembleRemovalReason(
                 {
@@ -219,7 +220,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
 
         console.log(`Messaging ${to ?? "subreddit"}`);
         const modConvo = await context.reddit.modMail.createConversation({
-            subredditName: subreddit,
+            subredditName,
             subject,
             body,
             to,
