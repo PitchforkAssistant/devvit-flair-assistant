@@ -1,7 +1,9 @@
-import {ModAction, PostV2} from "@devvit/protos";
+import {ModAction} from "@devvit/protos";
 import {BanUserOptions, TriggerContext, SetUserFlairOptions, SetPostFlairOptions} from "@devvit/public-api";
 import {hasPerformedActions, replacePlaceholders, getRecommendedPlaceholdersFromModAction, assembleRemovalReason, submitPostReply, ignoreReportsByPostId, setLockByPostId} from "devvit-helpers";
 import {getFlairAppSettings} from "../appSettings.js";
+import {PostV2} from "@devvit/protos/types/devvit/reddit/v2alpha/postv2.js";
+import {T3ID} from "@devvit/public-api/types/tid.js";
 
 export async function handleFlairUpdate (event: ModAction, context: TriggerContext) {
     if (event.action !== "editflair") {
@@ -98,7 +100,7 @@ export async function handleFlairUpdate (event: ModAction, context: TriggerConte
             console.log(`Adding user note to ${author}`);
             await context.reddit.addModNote({
                 user: author,
-                redditId: postId,
+                redditId: postId as T3ID,
                 note: replacePlaceholders(flairConfig.userNote.note, placeholders),
                 label: flairConfig.userNote.label,
                 subreddit: subredditName,
